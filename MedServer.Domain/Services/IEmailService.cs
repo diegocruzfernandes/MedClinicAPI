@@ -1,0 +1,11 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace MedServer.Domain.Services
+{
+    public interface IEmailService
+    {
+        void Send(string name, string email, string subject, string body);
+    }
+}
