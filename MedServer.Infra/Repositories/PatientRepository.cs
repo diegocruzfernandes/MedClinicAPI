@@ -48,7 +48,7 @@ namespace MedServer.Infra.Repositories
 
         public Patient Get(int id)
         {
-            return _context.Patients.Include(x => x.Records).AsNoTracking().FirstOrDefault(x => x.Id == id);
+            return _context.Patients.Include(r => r.Records).AsNoTracking().FirstOrDefault(x => x.Id == id);
         }
 
         public bool PatientExists(Patient patient)

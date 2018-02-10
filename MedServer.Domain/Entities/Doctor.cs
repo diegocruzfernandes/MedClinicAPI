@@ -1,9 +1,10 @@
 ﻿using Flunt.Notifications;
+using Flunt.Validations;
 using System.Collections.Generic;
 
 namespace MedServer.Domain.Entities
 {
-    public class Doctor : Notifiable
+    public class Doctor : Notifiable , IValidatable
     {
         protected Doctor() { }
 
@@ -40,10 +41,11 @@ namespace MedServer.Domain.Entities
         public void Deactivate() => Enabled = false;
 
         public void Validate() => AddNotifications(
-            new Flunt.Validations.Contract()
+            new Contract()
               .HasMinLen(Name, 3, "Name", "O Nome não pode ter menos que 3 caracteres")
               .HasMaxLen(Name, 60, "Name", "O Nome não pode ter mais que 60 caracteres")
-              .HasMinLen(Specialty, 3, "Speciality", "A Especialidade não pode ter menos que 3 caracteres")
+              .IsNotNull(Specialty, "Specialty", "A especialidade não pode ser nula")
+              .HasMinLen(Specialty, 3, "Specialty", "A Especialidade não pode ter menos que 3 caracteres")
               .HasMaxLen(Specialty, 60, "Specialty", "A Especialidade não pode ter mais que 60 caracteres")
               .HasMinLen(CodeRegister, 3, "CodeRegister", "O Registro não pode ter menos que 3 caracteres")
               .HasMaxLen(CodeRegister, 60, "CodeRegister", "O Registro não pode ter mais que 60 caracteres")

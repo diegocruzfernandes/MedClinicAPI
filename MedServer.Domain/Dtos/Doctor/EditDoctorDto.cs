@@ -8,7 +8,7 @@ namespace MedServer.Domain.Dtos.Doctor
     {
         public EditDoctorDto(int id, string name, string specialty, string codeRegister, bool enabled)
         {
-            Id = Id;
+            Id = id;
             Name = name;
             Specialty = specialty;
             CodeRegister = codeRegister;

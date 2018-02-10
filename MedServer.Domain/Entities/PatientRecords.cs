@@ -7,6 +7,8 @@ namespace MedServer.Domain.Entities
 {
     public class PatientRecords : Notifiable
     {
+        protected PatientRecords() { }
+
         public PatientRecords(int id, Patient patient, Doctor doctor, DateTime dateOfConsultation, string memo, bool enabled)
         {
             Id = id;
