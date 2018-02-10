@@ -12,9 +12,10 @@ using System;
 namespace MedServer.Infra.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20180210143104_addPatientDoctor")]
+    partial class addPatientDoctor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -153,11 +154,11 @@ namespace MedServer.Infra.Migrations
             modelBuilder.Entity("MedServer.Domain.Entities.Schedule", b =>
                 {
                     b.HasOne("MedServer.Domain.Entities.Doctor", "Doctor")
-                        .WithMany("Schedules")
+                        .WithMany("Schedule")
                         .HasForeignKey("DoctorId");
 
                     b.HasOne("MedServer.Domain.Entities.Patient", "Patient")
-                        .WithMany("Schedules")
+                        .WithMany("Schedule")
                         .HasForeignKey("PatientId");
                 });
 #pragma warning restore 612, 618

@@ -19,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03-Domain", "03-Domain", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04-Infra", "04-Infra", "{A209160D-76C4-464A-BD75-DFD5000205AC}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flunt", "..\flunt-master\flunt-master\Flunt\Flunt.csproj", "{57B7C2C6-9A0A-48DF-A8DD-04CF7262121A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{71080087-6C5B-4A5A-BE2B-8FAB426EA294}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{71080087-6C5B-4A5A-BE2B-8FAB426EA294}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{71080087-6C5B-4A5A-BE2B-8FAB426EA294}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57B7C2C6-9A0A-48DF-A8DD-04CF7262121A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57B7C2C6-9A0A-48DF-A8DD-04CF7262121A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57B7C2C6-9A0A-48DF-A8DD-04CF7262121A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57B7C2C6-9A0A-48DF-A8DD-04CF7262121A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
