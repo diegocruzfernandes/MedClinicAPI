@@ -35,6 +35,10 @@ namespace MedServer.Api
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IEmailService, EmailService>();
+            services.AddTransient<IPatientService, PatientService>();
+            services.AddTransient<IPatientRepository, PatientRepository>();
+            services.AddTransient<IDoctorService, DoctorService>();
+            services.AddTransient<IDoctorRepository, DoctorRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

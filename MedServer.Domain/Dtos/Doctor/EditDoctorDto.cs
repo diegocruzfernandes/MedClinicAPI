@@ -6,14 +6,16 @@ namespace MedServer.Domain.Dtos.Doctor
 {
     public class EditDoctorDto
     {
-        public EditDoctorDto(string name, string specialty, string codeRegister, bool enabled)
+        public EditDoctorDto(int id, string name, string specialty, string codeRegister, bool enabled)
         {
+            Id = Id;
             Name = name;
             Specialty = specialty;
             CodeRegister = codeRegister;
             Enabled = enabled;
         }
 
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Specialty { get; set; }
         public string CodeRegister { get;  set; }

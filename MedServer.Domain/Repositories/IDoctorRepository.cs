@@ -8,13 +8,13 @@ namespace MedServer.Domain.Repositories
 {
     public interface IDoctorRepository
     {
-        IEnumerable<DoctorDto> Get();
+        IEnumerable<Doctor> Get();
         IEnumerable<Doctor> Get(int skip, int take);
-        IEnumerable<Doctor> Find(string firstname, string lastname, bool match);
+        IEnumerable<Doctor> Find(string name);
         Doctor Get(int id);
-        void Save(Doctor employee);
-        void Update(Doctor employee);
-        void Delete(Doctor employee);
-        bool DoctorExists(Doctor employee);
+        void Save(Doctor doctor);
+        void Update(Doctor doctor);
+        void Delete(Doctor doctor);
+        bool DoctorExists(Doctor doctor);
     }
 }

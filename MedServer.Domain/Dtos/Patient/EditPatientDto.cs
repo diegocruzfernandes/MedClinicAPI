@@ -4,9 +4,9 @@ using System.Text;
 
 namespace MedServer.Domain.Dtos.Patient
 {
-    public class EditPatintDto
+    public class EditPatientDto
     {
-        public EditPatintDto(int id, string name, int gender, int age, bool enabled)
+        public EditPatientDto(int id, string name, int gender, int age, bool enabled)
         {
             Id = id;
             Name = name;
