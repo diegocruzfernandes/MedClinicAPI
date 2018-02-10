@@ -16,7 +16,7 @@ namespace MedServer.Domain.Services
         UserDto Create(CreateUserDto user);
         UserDto Update(EditUserDto user);
         UserDto Delete(int id);
-        User ResetPassword(int id);
+        ResetPasswordUserDto ResetPassword(int id);
         IEnumerable<Notification> Validate();
     }
 }

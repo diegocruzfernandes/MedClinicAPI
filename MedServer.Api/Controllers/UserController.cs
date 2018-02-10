@@ -33,5 +33,37 @@ namespace MedServer.Api.Controllers
             var result = _service.Get();
             return await ResponseList(result);
         }
+
+        [HttpGet]
+        [Route("v1/user/{id}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            var result = _service.Get(id);
+            return await ResponseList(result);
+        }
+
+        [HttpDelete]
+        [Route("v1/user/{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var result = _service.Delete(id);
+            return await Response(result, _service.Validate());
+        }
+
+        [HttpPut]
+        [Route("v1/user")]
+        public async Task<IActionResult> Update([FromBody] EditUserDto user)
+        {
+            var result = _service.Update(user);
+            return await Response(result, _service.Validate());
+        }
+
+        [HttpGet]
+        [Route("v1/user/{id}/resetpass")]
+        public async Task<IActionResult> ResetPassword(int id)
+        {
+            var result = _service.ResetPassword(id);
+            return await Response(result, _service.Validate());
+        }
     }
 }

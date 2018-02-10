@@ -86,14 +86,14 @@ namespace MedServer.Service
             return usercmd;
         }
 
-        public User ResetPassword(int id)
+        public ResetPasswordUserDto ResetPassword(int id)
         {
             var user = _repository.Get(id);
 
             if (user == null)
             {
-                user.AddNotification("User", "Usário não encontrado");
-                return user;
+                AddNotification("User", "Usário não encontrado");
+                return null;
             }
 
             var newPassword = user.ResetPassword();
@@ -102,9 +102,11 @@ namespace MedServer.Service
                 user.Nickname,
                 user.Email,
                  string.Format("Mazzatech - Med Clinic - Important", user.Nickname),
-                 string.Format($"Sua nova senha é: {newPassword}.", user.Nickname)
+                 string.Format($"Sua nova senha é: {newPassword}.", newPassword)
                 );
-            return user;
+
+            var userNewPass = new ResetPasswordUserDto() { Name = user.Nickname, Password = newPassword };
+            return userNewPass;
         }
 
         public IEnumerable<Notification> Validate()
