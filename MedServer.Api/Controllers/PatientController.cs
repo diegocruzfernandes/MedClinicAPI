@@ -1,4 +1,5 @@
-﻿using MedServer.Domain.Dtos.Patient;
+﻿using MedServer.Api.Shared;
+using MedServer.Domain.Dtos.PatientDtos;
 using MedServer.Domain.Services;
 using MedServer.Infra.Transactions;
 using Microsoft.AspNetCore.Mvc;
@@ -22,6 +23,10 @@ namespace MedServer.Api.Controllers
         [Route("v1/patient")]
         public async Task<IActionResult> Post([FromBody] CreatePatientDto patient)
         {
+            var listError = ValidPropertiesObject.ObjIsValid(patient);
+            if (listError.Count > 0)
+                return await ResponseNullOrEmpty(listError);
+
             var result = _service.Create(patient);
             return await Response(result, _service.Validate());
         }
@@ -65,6 +70,10 @@ namespace MedServer.Api.Controllers
         [Route("v1/patient")]
         public async Task<IActionResult> Update([FromBody] EditPatientDto patient)
         {
+            var listError = ValidPropertiesObject.ObjIsValid(patient);
+            if (listError.Count > 0)
+                return await ResponseNullOrEmpty(listError);
+
             var result = _service.Update(patient);
             return await Response(result, _service.Validate());
         }

@@ -40,7 +40,11 @@ namespace MedServer.Infra.Migrations
                         .IsRequired()
                         .HasMaxLength(60);
 
+                    b.Property<int?>("UserId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Doctors");
                 });
@@ -50,13 +54,23 @@ namespace MedServer.Infra.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("Age");
+                    b.Property<DateTime>("BirthDate");
+
+                    b.Property<string>("Details")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(60);
 
                     b.Property<bool>("Enabled");
 
                     b.Property<int>("Gender");
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(60);
+
+                    b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasMaxLength(60);
 
@@ -94,9 +108,11 @@ namespace MedServer.Infra.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<DateTime>("DateReg");
+
                     b.Property<int?>("DoctorId");
 
-                    b.Property<DateTime>("End");
+                    b.Property<DateTime>("Finish");
 
                     b.Property<DateTime>("Initial");
 
@@ -104,13 +120,60 @@ namespace MedServer.Infra.Migrations
 
                     b.Property<int>("Status");
 
+                    b.Property<int?>("TypeConsultId");
+
                     b.HasKey("Id");
 
                     b.HasIndex("DoctorId");
 
                     b.HasIndex("PatientId");
 
-                    b.ToTable("Schedule");
+                    b.HasIndex("TypeConsultId");
+
+                    b.ToTable("Schedules");
+                });
+
+            modelBuilder.Entity("MedServer.Domain.Entities.Secretary", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Document")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<bool>("Enabled");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(60);
+
+                    b.Property<int?>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Secretaries");
+                });
+
+            modelBuilder.Entity("MedServer.Domain.Entities.TypeConsult", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(255);
+
+                    b.Property<bool>("Enabled");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(60);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TypesConsult");
                 });
 
             modelBuilder.Entity("MedServer.Domain.Entities.User", b =>
@@ -139,6 +202,13 @@ namespace MedServer.Infra.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("MedServer.Domain.Entities.Doctor", b =>
+                {
+                    b.HasOne("MedServer.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("MedServer.Domain.Entities.PatientRecords", b =>
                 {
                     b.HasOne("MedServer.Domain.Entities.Doctor", "Doctor")
@@ -153,12 +223,23 @@ namespace MedServer.Infra.Migrations
             modelBuilder.Entity("MedServer.Domain.Entities.Schedule", b =>
                 {
                     b.HasOne("MedServer.Domain.Entities.Doctor", "Doctor")
-                        .WithMany("Schedules")
+                        .WithMany()
                         .HasForeignKey("DoctorId");
 
                     b.HasOne("MedServer.Domain.Entities.Patient", "Patient")
-                        .WithMany("Schedules")
+                        .WithMany()
                         .HasForeignKey("PatientId");
+
+                    b.HasOne("MedServer.Domain.Entities.TypeConsult", "TypeConsult")
+                        .WithMany()
+                        .HasForeignKey("TypeConsultId");
+                });
+
+            modelBuilder.Entity("MedServer.Domain.Entities.Secretary", b =>
+                {
+                    b.HasOne("MedServer.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }

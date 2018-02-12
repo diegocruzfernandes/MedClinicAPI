@@ -1,11 +1,11 @@
 ﻿using MedServer.Domain.Entities;
 using MedServer.Domain.Repositories;
 using MedServer.Infra.Context;
-using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq.Expressions;
+using System;
 
 namespace MedServer.Infra.Repositories
 {
@@ -20,7 +20,9 @@ namespace MedServer.Infra.Repositories
 
         public void Delete(Doctor doctor)
         {
-            _context.Entry(doctor).State = EntityState.Deleted;
+            //_context.Entry(doctor.User) = EntityState.Deleted;
+            _context.Remove(doctor);
+            //_context.Entry(doctor).State = EntityState.Deleted;
         }
 
         public bool DoctorExists(Doctor doctor)
@@ -28,9 +30,9 @@ namespace MedServer.Infra.Repositories
             return _context.Doctors.Any(x => x.Name == doctor.Name);
         }
 
-        public IEnumerable<Doctor> Find(string name)
-        {
-            return _context.Doctors.Include(x => x.Schedules).AsNoTracking().Where(x => x.Name == name);
+        public IEnumerable<Doctor> Find(Expression<Func<Doctor, bool>> expression)
+        {    
+            return _context.Doctors.Where(expression);
         }
 
         public IEnumerable<Doctor> Get()
@@ -45,7 +47,7 @@ namespace MedServer.Infra.Repositories
 
         public Doctor Get(int id)
         {
-            return _context.Doctors.Include(s => s.Schedules).AsNoTracking().FirstOrDefault(x => x.Id == id);
+            return _context.Doctors.FirstOrDefault(x => x.Id == id);
         }
 
         public void Save(Doctor doctor)

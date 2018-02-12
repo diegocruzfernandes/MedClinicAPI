@@ -1,5 +1,5 @@
 ﻿using Flunt.Notifications;
-using MedServer.Domain.Dtos.Patient;
+using MedServer.Domain.Dtos.PatientDtos;
 using MedServer.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -16,6 +16,6 @@ namespace MedServer.Domain.Services
         Patient Create(CreatePatientDto patient);
         Patient Update(EditPatientDto patient);
         Patient Delete(int id);
-        IEnumerable<Notification> Validate();
+        IEnumerable<Notification> Validate();        
     }
 }

@@ -1,5 +1,5 @@
 ﻿using Flunt.Notifications;
-using MedServer.Domain.Dtos.User;
+using MedServer.Domain.Dtos.UserDtos;
 using MedServer.Domain.Entities;
 using MedServer.Domain.Repositories;
 using MedServer.Domain.Services;
@@ -31,10 +31,9 @@ namespace MedServer.Service
             return _repository.Get(skip, take);
         }
 
-        public UserDto Get(int id)
+        public User Get(int id)
         {
-            var usercmd = ConvertUserToUserDtoAndAddNotifications(_repository.Get(id));
-            return usercmd;
+            return _repository.Get(id);         
         }
 
         public User GetByEmail(string email)
@@ -42,7 +41,7 @@ namespace MedServer.Service
             return _repository.GetByEmail(email);
         }
 
-        public UserDto Create(CreateUserDto user)
+        public User Create(CreateUserDto user)
         {
             var userNew = new User(0, user.Email, user.Password, user.Nickname, (EPermission)user.Permission, user.Enabled);
 
@@ -55,8 +54,8 @@ namespace MedServer.Service
             if (userNew.Valid)
                 _repository.Save(userNew);
 
-            var usercmd = ConvertUserToUserDtoAndAddNotifications(userNew);
-            return usercmd;
+            //var usercmd = ConvertUserToUserDtoAndAddNotifications(userNew);
+            return userNew;
         }
 
         public UserDto Update(EditUserDto user)
@@ -66,7 +65,7 @@ namespace MedServer.Service
 
             if (userTmp.Enabled) userTmp.Activate(); else userTmp.Deactivate();
 
-            if (userTmp.Invalid)
+            if (userTmp.Valid)
                 _repository.Update(userTmp);
 
             var usercmd = ConvertUserToUserDtoAndAddNotifications(userTmp);
@@ -78,7 +77,7 @@ namespace MedServer.Service
             var user = _repository.Get(id);
 
             if (user == null)
-                user.AddNotification("User", "Não foi encontrado o usúario solicitado");
+                AddNotification("User", "Não foi encontrado o usúario solicitado");
             else
                 _repository.Delete(user);
 
@@ -114,6 +113,14 @@ namespace MedServer.Service
             return Notifications;
         }
 
+        public bool IsValid()
+        {
+            if (Notifications.Count > 0)
+                return false;
+            else
+                return true;
+        }
+
         private UserDto ConvertUserToUserDtoAndAddNotifications(User user)
         {
             var userdto = new UserDto
@@ -126,7 +133,6 @@ namespace MedServer.Service
             };
             AddNotifications(user.Notifications);
             return userdto;
-        }
-
+        }  
     }
 }

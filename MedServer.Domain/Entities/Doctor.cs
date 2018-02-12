@@ -4,19 +4,20 @@ using System.Collections.Generic;
 
 namespace MedServer.Domain.Entities
 {
-    public class Doctor : Notifiable , IValidatable
+    public class Doctor : Notifiable
     {
         protected Doctor() { }
 
-        public Doctor(int id, string name, string specialty, string codeRegister, bool enabled)
+        public Doctor(int id, string name, string specialty, string codeRegister,User user ,bool enabled)
         {
             Id = id;
             Name = name;
             Specialty = specialty;
             CodeRegister = codeRegister;
             Enabled = enabled;
+            User = user;           
 
-            Schedules = new List<Schedule>();
+            Schedules = new HashSet<Schedule>();
 
             Validate();
         }
@@ -26,8 +27,9 @@ namespace MedServer.Domain.Entities
         public string Specialty { get; private set; }
         public string CodeRegister { get; private set; }
         public bool Enabled { get; private set; }
+        public User User { get; private set; }
 
-        public List<Schedule> Schedules { get; set; }
+        public ICollection<Schedule> Schedules { get; private set; } 
 
         public void Update(string name, string speciality, string codeRegister)
         {

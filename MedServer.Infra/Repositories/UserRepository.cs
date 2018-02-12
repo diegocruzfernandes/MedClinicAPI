@@ -1,4 +1,4 @@
-﻿using MedServer.Domain.Dtos.User;
+﻿using MedServer.Domain.Dtos.UserDtos;
 using MedServer.Domain.Entities;
 using MedServer.Domain.Repositories;
 using MedServer.Infra.Context;

@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MedServer.Domain.Dtos.Patient;
+using MedServer.Domain.Dtos.PatientDtos;
 using MedServer.Domain.Entities;
 using MedServer.Domain.Repositories;
 using MedServer.Infra.Context;

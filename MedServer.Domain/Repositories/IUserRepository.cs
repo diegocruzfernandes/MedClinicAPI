@@ -1,8 +1,6 @@
-﻿using MedServer.Domain.Dtos.User;
+﻿using MedServer.Domain.Dtos.UserDtos;
 using MedServer.Domain.Entities;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace MedServer.Domain.Repositories
 {

@@ -1,5 +1,5 @@
 ﻿using Flunt.Notifications;
-using MedServer.Domain.Dtos.User;
+using MedServer.Domain.Dtos.UserDtos;
 using MedServer.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -11,12 +11,13 @@ namespace MedServer.Domain.Services
     {
         IEnumerable<UserDto> Get();
         IEnumerable<UserDto> Get(int skip, int take);
-        UserDto Get(int id);
+        User Get(int id);
         User GetByEmail(string email);
-        UserDto Create(CreateUserDto user);
+        User Create(CreateUserDto user);
         UserDto Update(EditUserDto user);
         UserDto Delete(int id);
         ResetPasswordUserDto ResetPassword(int id);
         IEnumerable<Notification> Validate();
+        bool IsValid();     
     }
 }

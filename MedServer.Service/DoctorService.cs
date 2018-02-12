@@ -1,11 +1,13 @@
 ﻿using Flunt.Notifications;
-using MedServer.Domain.Dtos.Doctor;
+using MedServer.Domain.Dtos.DoctorDtos;
+using MedServer.Domain.Dtos.UserDtos;
 using MedServer.Domain.Entities;
 using MedServer.Domain.Repositories;
 using MedServer.Domain.Services;
 using MedServer.Infra.Transactions;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace MedServer.Service
@@ -13,21 +15,27 @@ namespace MedServer.Service
     public class DoctorService : Notifiable, IDoctorService
     {
         private readonly IDoctorRepository _repository;
+        private readonly IUserService _service;
 
-        public DoctorService(IDoctorRepository repository)
+        public DoctorService(IDoctorRepository repository, IUserService service)
         {
             _repository = repository;
+            _service = service;
         }
 
         public Doctor Create(CreateDoctorDto doctor)
         {
-            var doctorTmp = new Doctor(0, doctor.Name, doctor.Specialty, doctor.CodeRegister, doctor.Enabled);
+            var user = _service.Create(new CreateUserDto(doctor.User.Email, doctor.User.Password, doctor.User.Nickname, (int)doctor.User.Permission ,doctor.User.Enabled));
+           
+            var doctorTmp = new Doctor(0, doctor.Name, doctor.Specialty, doctor.CodeRegister, user, doctor.Enabled);
 
             if (_repository.DoctorExists(doctorTmp))
-                doctorTmp.AddNotification("Doctor", "O Doutor já existe!");
+                AddNotification("Doctor", "O Médico já existe!");
 
             if (doctorTmp.Valid)
                 _repository.Save(doctorTmp);
+
+            AddNotifications(user.Notifications);
 
             return doctorTmp;
         }
@@ -44,9 +52,9 @@ namespace MedServer.Service
             return doctor;
         }
 
-        public IEnumerable<Doctor> Find(string name)
+        public IEnumerable<Doctor> Find(Expression<Func<Doctor, bool>> expression)
         {
-            return _repository.Find(name);
+            return _repository.Find(expression);
         }
 
         public IEnumerable<Doctor> Get()
@@ -66,13 +74,15 @@ namespace MedServer.Service
 
         public Doctor Update(EditDoctorDto doctor)
         {
-            var doctorTmp = new Doctor(doctor.Id, doctor.Name, doctor.Specialty, doctor.CodeRegister, doctor.Enabled);
+            //TODO: o ID do usuário de ser o que vir pelo TOKEN
+            var user = _service.Get(0);
+            var doctorTmp = new Doctor(doctor.Id, doctor.Name, doctor.Specialty, doctor.CodeRegister, user, doctor.Enabled);
             if (doctorTmp.Valid)
                 _repository.Update(doctorTmp);
 
             return doctorTmp;
         }
-
+        
         public IEnumerable<Notification> Validate()
         {
             return Notifications;

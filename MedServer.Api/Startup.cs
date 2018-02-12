@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using MedServer.Domain.Repositories;
+﻿using MedServer.Domain.Repositories;
 using MedServer.Domain.Services;
 using MedServer.Infra.Context;
 using MedServer.Infra.Repositories;
@@ -12,8 +8,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace MedServer.Api
 {
@@ -28,7 +24,11 @@ namespace MedServer.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc()
+             .AddJsonOptions(opt =>
+             {
+                 opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+             });
 
             services.AddScoped<DataContext, DataContext>();
             services.AddTransient<IUow, Uow>();
@@ -39,6 +39,13 @@ namespace MedServer.Api
             services.AddTransient<IPatientRepository, PatientRepository>();
             services.AddTransient<IDoctorService, DoctorService>();
             services.AddTransient<IDoctorRepository, DoctorRepository>();
+            services.AddTransient<ISecretaryService, SecretaryService>();
+            services.AddTransient<ISecretaryRepository, SecretaryRepository>();
+            services.AddTransient<ITypeConsultRepository, TypeConsultRepository>();
+            services.AddTransient<ITypeConsultService, TypeConsultService>();
+            services.AddTransient<IScheduleRepository, ScheduleRepository>();
+            services.AddTransient<IScheduleService, ScheduleService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

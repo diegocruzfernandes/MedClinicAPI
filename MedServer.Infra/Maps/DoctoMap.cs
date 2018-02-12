@@ -16,8 +16,7 @@ namespace MedServer.Infra.Maps
             builder.Property(x => x.Specialty).IsRequired().HasMaxLength(60);
             builder.Property(x => x.CodeRegister).IsRequired().HasMaxLength(60);
             builder.Property(x => x.Enabled);
-
-           // builder.HasOne(d => d.Schedules).WithMany(s => s.doc);
+            builder.Ignore(x => x.Schedules);
         }
     }
 }

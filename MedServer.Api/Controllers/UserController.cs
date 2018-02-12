@@ -1,4 +1,5 @@
-﻿using MedServer.Domain.Dtos.User;
+﻿using MedServer.Api.Shared;
+using MedServer.Domain.Dtos.UserDtos;
 using MedServer.Domain.Services;
 using MedServer.Infra.Transactions;
 using Microsoft.AspNetCore.Mvc;
@@ -18,13 +19,19 @@ namespace MedServer.Api.Controllers
             _service = service;
         }
 
+        /* - O Uswe é criado pelo Doctor ou Secretary
         [HttpPost]
         [Route("v1/user")]
         public async Task<IActionResult> Post([FromBody] CreateUserDto user)
         {
+            var listError = ValidPropertiesObject.ObjIsValid(user);
+            if (listError.Count > 0)
+                return await ResponseNullOrEmpty(listError);
+
             var result = _service.Create(user);
             return await Response(result, _service.Validate());
         }
+        */
 
         [HttpGet]
         [Route("v1/user")]
@@ -54,6 +61,10 @@ namespace MedServer.Api.Controllers
         [Route("v1/user")]
         public async Task<IActionResult> Update([FromBody] EditUserDto user)
         {
+            var listError = ValidPropertiesObject.ObjIsValid(user);
+            if (listError.Count > 0)
+                return await ResponseNullOrEmpty(listError);
+
             var result = _service.Update(user);
             return await Response(result, _service.Validate());
         }

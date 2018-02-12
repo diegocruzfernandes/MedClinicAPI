@@ -1,4 +1,5 @@
 ﻿using Flunt.Notifications;
+using Flunt.Validations;
 using MedServer.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
@@ -10,21 +11,46 @@ namespace MedServer.Domain.Entities
     {
         protected Schedule() { }
 
-        public Schedule(int id, Doctor doctor, Patient patient, DateTime initial, DateTime end, EStatus status)
+        public Schedule(int id, Doctor doctor, Patient patient, DateTime initial, DateTime finish, DateTime dateReg, TypeConsult typeConsult, EStatus status)
         {
             Id = id;
             Doctor = doctor;
             Patient = patient;
             Initial = initial;
-            End = end;
+            Finish = finish;
+            DateReg = dateReg;
+            TypeConsult = typeConsult;
             Status = status;
+
+            AddNotifications(new Contract());
         }
 
         public int Id { get; private set; }
-        public Doctor Doctor { get; private set; }
-        public Patient Patient { get; private set; }
         public DateTime Initial { get; private set; }
-        public DateTime End { get; private set; }
+        public DateTime Finish { get; private set; }
+        public DateTime DateReg { get; private set; }
         public EStatus Status { get; private set; }
+
+        public virtual Doctor Doctor { get; set; }
+        public virtual Patient Patient { get; set; }
+        public virtual TypeConsult TypeConsult { get;  set; }
+
+        public void ChangeHours(DateTime initial, DateTime finish)
+        {
+            Initial = initial;
+            Finish = finish;
+        }
+
+        public void ChangeStatus(EStatus status)
+        {
+            Status = status;
+        }
+
+        public void ChangeTypeConsult(TypeConsult typeConsult)
+        {
+            TypeConsult = typeConsult;
+        }
+
+
     }
 }

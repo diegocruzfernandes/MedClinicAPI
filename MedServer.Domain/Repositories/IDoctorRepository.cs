@@ -1,8 +1,7 @@
-﻿using MedServer.Domain.Dtos.Doctor;
-using MedServer.Domain.Entities;
+﻿using MedServer.Domain.Entities;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq.Expressions;
 
 namespace MedServer.Domain.Repositories
 {
@@ -10,7 +9,7 @@ namespace MedServer.Domain.Repositories
     {
         IEnumerable<Doctor> Get();
         IEnumerable<Doctor> Get(int skip, int take);
-        IEnumerable<Doctor> Find(string name);
+        IEnumerable<Doctor> Find(Expression<Func<Doctor, bool>> expression);
         Doctor Get(int id);
         void Save(Doctor doctor);
         void Update(Doctor doctor);

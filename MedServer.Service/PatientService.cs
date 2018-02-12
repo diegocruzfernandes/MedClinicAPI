@@ -1,5 +1,5 @@
 ﻿using Flunt.Notifications;
-using MedServer.Domain.Dtos.Patient;
+using MedServer.Domain.Dtos.PatientDtos;
 using MedServer.Domain.Entities;
 using MedServer.Domain.Repositories;
 using MedServer.Domain.Services;
@@ -21,7 +21,7 @@ namespace MedServer.Service
 
         public Patient Create(CreatePatientDto patient)
         {
-            var patientTmp = new Patient(0, patient.Name, (EGender)patient.Gender, patient.Age, patient.Enabled);
+            var patientTmp = new Patient(0, patient.Name, (EGender)patient.Gender, patient.Email,patient.PhoneNumber, patient.Details, patient.BirthDate, patient.Enabled);
 
             if (_repository.PatientExists(patientTmp))
                 patientTmp.AddNotification("Patient", "O usuário já existe");
@@ -31,7 +31,7 @@ namespace MedServer.Service
 
             return patientTmp;
         }
-
+        
         public IEnumerable<Patient> Find(string name)
         {
             return _repository.Find(name);
@@ -54,7 +54,7 @@ namespace MedServer.Service
 
         public Patient Update(EditPatientDto patient)
         {
-            var patientTmp = new Patient(patient.Id, patient.Name, (EGender)patient.Gender, patient.Age, patient.Enabled);
+            var patientTmp = new Patient(patient.Id, patient.Name, (EGender)patient.Gender, patient.Email, patient.PhoneNumber, patient.Details, patient.BirthDate, patient.Enabled);
 
             if (patientTmp.Valid)
                 _repository.Update(patientTmp);
@@ -77,6 +77,6 @@ namespace MedServer.Service
                 _repository.Delete(patient);
 
             return patient;
-        }
+        }       
     }
 }

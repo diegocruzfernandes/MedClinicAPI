@@ -1,6 +1,7 @@
 ﻿using Flunt.Notifications;
 using MedServer.Infra.Transactions;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,7 @@ namespace MedServer.Api.Controllers
                     return Ok(new
                     {
                         success = true,
-                        data = result
+                        data = result                        
                     });
                 }
                 catch (Exception ex)
@@ -35,7 +36,7 @@ namespace MedServer.Api.Controllers
                     return BadRequest(new
                     {
                         success = false,
-                        errors = new[] { "Ocorreu uma folha interna no servidor.", ex.Message }
+                        errors = new[] { "Ocorreu uma falha  interna no servidor.", ex.Source + " - " + ex.Message }
                     });
                 }
             }
@@ -66,13 +67,14 @@ namespace MedServer.Api.Controllers
 
         }
 
-        public async Task<IActionResult> ResponseNullOrEmpty()
+        public async Task<IActionResult> ResponseNullOrEmpty(List<string> listError)
         {
             return BadRequest(new
             {
                 success = false,
-                errors = new[] { "Dados não preenchidos ou inválidos." }
+                errors = new[] { "Dados não preenchidos ou inválidos." },
+                data = listError
             });
-        }
+        }        
     }
 }

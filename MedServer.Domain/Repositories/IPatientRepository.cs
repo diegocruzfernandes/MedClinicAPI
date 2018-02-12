@@ -1,4 +1,4 @@
-﻿using MedServer.Domain.Dtos.Patient;
+﻿using MedServer.Domain.Dtos.PatientDtos;
 using MedServer.Domain.Entities;
 using System;
 using System.Collections.Generic;

@@ -10,33 +10,43 @@ namespace MedServer.Domain.Entities
     {
         protected Patient() { }
 
-        public Patient(int id, string name, EGender gender, int age, bool enabled)
+        public Patient(int id, string name, EGender gender, string email, string phoneNumber, string details, DateTime birthDate, bool enabled)
         {
             Id = id;
             Name = name;
             Gender = gender;
-            Age = age;
+            Email = email;
+            PhoneNumber = phoneNumber;
+            Details = details;
+            BirthDate = birthDate;
             Enabled = enabled;
             Validate();
 
-            Records = new List<PatientRecords>();
-            Schedules = new List<Schedule>();
+            Records = new HashSet<PatientRecords>();
+            Schedules = new HashSet<Schedule>();
         }
 
         public int Id { get; private set; }
         public string Name { get; private set; }
         public EGender Gender { get; private set; }
-        public int Age { get; private set; }
+        public string Email { get; private set; }
+        public string PhoneNumber { get; private set; }
+        public string Details { get; private set; }
+        public DateTime BirthDate { get; private set; }
+
         public bool Enabled { get; private set; }
 
-        public List<PatientRecords> Records { get; private set; }
-        public List<Schedule> Schedules { get; private set; }
+        public ICollection<PatientRecords> Records { get; private set; }
+        public ICollection<Schedule> Schedules { get; private set; }
 
-        public void Update(string name, EGender gender, int age)
+        public void Update(string name, EGender gender, string email, string phoneNumber, string details, DateTime birthDate)
         {
             Name = name;
             Gender = gender;
-            Age = age;
+            Email = email;
+            PhoneNumber = phoneNumber;
+            Details = details;
+            BirthDate = birthDate;
             Validate();
         }
 
@@ -48,7 +58,10 @@ namespace MedServer.Domain.Entities
            new Flunt.Validations.Contract()
              .HasMinLen(Name, 3, "Name", "O Nome não pode ter menos que 3 caracteres")
              .HasMaxLen(Name, 60, "Name", "O Nome não pode ter mais que 60 caracteres")
-             .IsGreaterThan(Age, 1,"Age", "O paciente não pode ter idade inferior há 1 ano") 
+             .IsEmail(Email, "Email", "E-mail com formato errado")
+             .HasMinLen(PhoneNumber, 3, "PhoneNumber", "O telefone não pode ter menos que 3 caracteres")
+             .HasMaxLen(PhoneNumber, 60, "PhoneNumber", "O telefone não pode ter mais que 60 caracteres")
+             .HasMaxLen(Details, 255, "Details", "O detalhes não pode ter mais que 60 caracteres")
             );
     }
 }

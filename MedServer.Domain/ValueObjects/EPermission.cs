@@ -8,7 +8,7 @@ namespace MedServer.Domain.ValueObjects
     {
         Admin = 0,
         Doctor = 1,
-        Patient = 2,
+        Secretary = 2,
         User = 3
     }
 }
