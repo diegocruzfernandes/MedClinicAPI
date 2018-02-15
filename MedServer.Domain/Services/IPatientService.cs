@@ -1,9 +1,7 @@
 ﻿using Flunt.Notifications;
 using MedServer.Domain.Dtos.PatientDtos;
 using MedServer.Domain.Entities;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace MedServer.Domain.Services
 {

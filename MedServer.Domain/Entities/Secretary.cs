@@ -1,13 +1,11 @@
 ﻿using Flunt.Notifications;
 using Flunt.Validations;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MedServer.Domain.Entities
 {
     public class Secretary : Notifiable
     {
+        #region ctor
         protected Secretary() { }
 
         public Secretary(int id, string name, string document, bool enabled, User user)
@@ -18,13 +16,17 @@ namespace MedServer.Domain.Entities
             Enabled = enabled;
             User = user;
         }
+        #endregion
 
+        #region prop
         public int Id { get; private set; }
         public string Name { get; private set; }
         public string Document { get; private set; }
         public bool Enabled { get; private set; }
         public User User { get; private set; }
+        #endregion
 
+        #region methods
         public void Update(string name, string document)
         {
             Name = name;
@@ -42,5 +44,6 @@ namespace MedServer.Domain.Entities
              .HasMaxLen(Name, 60, "Name", "O Nome não pode ter mais que 60 caracteres")
              .HasMaxLen(Document, 255, "Document", "O Documento não pode ter mais de  255 caracteres1")
             );
+        #endregion
     }
 }

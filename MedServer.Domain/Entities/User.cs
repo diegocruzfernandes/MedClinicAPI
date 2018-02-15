@@ -3,8 +3,6 @@ using Flunt.Validations;
 using MedServer.Domain.Shared;
 using MedServer.Domain.ValueObjects;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MedServer.Domain.Entities
 {

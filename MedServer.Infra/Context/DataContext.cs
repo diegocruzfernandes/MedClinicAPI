@@ -2,14 +2,9 @@
 using MedServer.Domain.Entities;
 using MedServer.Infra.Maps;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using System.Linq;
 
 namespace MedServer.Infra.Context
 {
-    //
-    //"Data Source=SIGAMESERVER\SQLEXPRESS;Initial Catalog=MedClinic;User ID=sa;Password=cristal1"
-
     public class DataContext : DbContext
     {
         public DbSet<User> Users { get; set; }        

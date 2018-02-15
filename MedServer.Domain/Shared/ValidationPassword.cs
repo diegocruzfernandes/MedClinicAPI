@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Text;
 
 namespace MedServer.Domain.Shared
 {
@@ -15,7 +13,6 @@ namespace MedServer.Domain.Shared
             var sbString = new StringBuilder();
             foreach (var t in data)
                 sbString.Append(t.ToString("x2"));
-
             return sbString.ToString();
         }
     }

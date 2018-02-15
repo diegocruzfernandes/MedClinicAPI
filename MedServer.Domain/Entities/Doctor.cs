@@ -6,6 +6,7 @@ namespace MedServer.Domain.Entities
 {
     public class Doctor : Notifiable
     {
+        #region ctor
         protected Doctor() { }
 
         public Doctor(int id, string name, string specialty, string codeRegister,User user ,bool enabled)
@@ -15,13 +16,14 @@ namespace MedServer.Domain.Entities
             Specialty = specialty;
             CodeRegister = codeRegister;
             Enabled = enabled;
-            User = user;           
-
+            User = user;          
             Schedules = new List<Schedule>();
 
             Validate();
         }
+        #endregion
 
+        #region prop
         public int Id { get; private set; }
         public string Name { get; private set; }
         public string Specialty { get; private set; }
@@ -29,8 +31,10 @@ namespace MedServer.Domain.Entities
         public bool Enabled { get; private set; }
         public User User { get; private set; }
 
-        public virtual ICollection<Schedule> Schedules { get; private set; } 
+        public virtual ICollection<Schedule> Schedules { get; private set; }
+        #endregion
 
+        #region methods
         public void Update(string name, string speciality, string codeRegister)
         {
             Name = name;
@@ -52,5 +56,6 @@ namespace MedServer.Domain.Entities
               .HasMinLen(CodeRegister, 3, "CodeRegister", "O Registro não pode ter menos que 3 caracteres")
               .HasMaxLen(CodeRegister, 60, "CodeRegister", "O Registro não pode ter mais que 60 caracteres")
             );
+        #endregion
     }
 }

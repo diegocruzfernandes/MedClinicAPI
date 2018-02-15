@@ -1,13 +1,12 @@
 ﻿using Flunt.Notifications;
 using Flunt.Validations;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace MedServer.Domain.Entities
 {
     public class TypeConsult : Notifiable
     {
+        #region ctor
         protected TypeConsult() { }
 
         public TypeConsult(int id, string name, string description, bool enabled)
@@ -19,14 +18,18 @@ namespace MedServer.Domain.Entities
             Schedules = new HashSet<Schedule>();
             Validate();
         }
+        #endregion
 
+        #region prop
         public int Id{ get; private set; }
         public string Name { get; private set; }
         public string Description { get; private set; }
         public bool Enabled { get; private set; }
 
         public ICollection<Schedule> Schedules { get; private set; }
+        #endregion
 
+        #region methods
         public void Update(string name, string description)
         {
             Name = name;
@@ -44,5 +47,6 @@ namespace MedServer.Domain.Entities
                .HasMaxLen(Name, 60, "Name", "O Name não pode ter mais que 60 caracteres")
                .HasMaxLen(Description, 255, "Description", "A Descrition deve ter no máximo 255 caracteres")
            );
+        #endregion
     }
 }

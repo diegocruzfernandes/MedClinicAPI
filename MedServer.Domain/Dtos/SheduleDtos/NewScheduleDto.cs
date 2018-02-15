@@ -1,8 +1,5 @@
 ﻿using MedServer.Domain.Dtos.DoctorDtos;
 using MedServer.Domain.Dtos.TypeConsultDtos;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MedServer.Domain.Dtos.SheduleDtos
 {

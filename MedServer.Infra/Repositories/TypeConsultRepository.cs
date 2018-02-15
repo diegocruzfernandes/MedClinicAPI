@@ -2,10 +2,8 @@
 using MedServer.Domain.Repositories;
 using MedServer.Infra.Context;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.Text;
 
 namespace MedServer.Infra.Repositories
 {

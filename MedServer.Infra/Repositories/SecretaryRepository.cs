@@ -23,7 +23,6 @@ namespace MedServer.Infra.Repositories
            
             _context.Remove(user);
             _context.Remove(secretaryDelete);
-
         }
 
         public IEnumerable<Secretary> Find(string name)

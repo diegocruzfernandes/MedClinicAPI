@@ -1,9 +1,6 @@
 ﻿using MedServer.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MedServer.Infra.Maps
 {
@@ -16,9 +13,6 @@ namespace MedServer.Infra.Maps
             builder.Property(x => x.Finish);
             builder.Property(x => x.Status).IsRequired();
             builder.Property(x => x.DateReg).IsRequired();
-            //builder.HasOne(d => d.Doctor).WithMany(s => s.Schedules);
-            //builder.HasOne(p => p.Patient).WithMany(s => s.Schedules);
-           
         }
     }
 }

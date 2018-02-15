@@ -1,9 +1,6 @@
 ﻿using MedServer.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System.Linq;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MedServer.Infra.Maps
 {
@@ -15,7 +12,6 @@ namespace MedServer.Infra.Maps
             builder.Property(x => x.Name).IsRequired().HasMaxLength(60);
             builder.Property(x => x.Document).IsRequired().HasMaxLength(255);
             builder.Property(x => x.Enabled);
-            //builder.Property(x => x.User).IsRequired();
         }
     }
 }

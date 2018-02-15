@@ -1,18 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MedServer.Domain.Dtos.PatientDtos;
 using MedServer.Domain.Entities;
 using MedServer.Domain.Repositories;
 using MedServer.Infra.Context;
-using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.Text;
 
 namespace MedServer.Infra.Repositories
 {
     public class PatientRepository : IPatientRepository
     {
-
         private readonly DataContext _context;
 
         public PatientRepository(DataContext context)
@@ -26,8 +22,6 @@ namespace MedServer.Infra.Repositories
             var recordsList = patientDelete.Records.ToList();
             _context.RemoveRange(recordsList);
             _context.Remove(patientDelete);
-
-           // _context.Entry(patient).State = EntityState.Deleted;
         }
 
         public IEnumerable<Patient> Find(string name)

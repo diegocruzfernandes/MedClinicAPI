@@ -1,8 +1,4 @@
-﻿using MedServer.Domain.Dtos.UserDtos;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿
 namespace MedServer.Domain.Dtos.SecretaryDtos
 {
     public class CreateSecretaryDto

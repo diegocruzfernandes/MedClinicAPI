@@ -23,17 +23,13 @@ namespace MedServer.Service
         public Secretary Create(CreateSecretaryDto secretary)
         {
             var passwordTMP = secretary.Email.Substring(0, 3).ToLower();
-
             var user = _service.Create(new CreateUserDto(secretary.Email, passwordTMP, secretary.Nickname, secretary.Permission, secretary.Enabled));
-
             var secretaryTemp = new Secretary(0, secretary.Name, secretary.Document, secretary.Enabled, user);
 
             if (_repository.SecretaryExists(secretaryTemp))
                 AddNotification("Secretary", "O secretário/a já existe!");
-
             if (secretaryTemp.Valid)
                 _repository.Save(secretaryTemp);
-
             AddNotifications(user.Notifications);
             return secretaryTemp;
         }
@@ -41,7 +37,6 @@ namespace MedServer.Service
         public Secretary Delete(int id)
         {
             var secretary = _repository.Get(id);
-
             if (secretary == null)
                 AddNotification("Secretary", "O secretário/a não foi encontrado");
             else
@@ -53,9 +48,7 @@ namespace MedServer.Service
         public IEnumerable<ViewSecretaryDto> Find(string name)
         {
             List<ViewSecretaryDto> viewSecretary = new List<ViewSecretaryDto>();
-
-            var secretaries = _repository.Find(name); ;
-
+            var secretaries = _repository.Find(name);
             foreach (var secretary in secretaries)
             {
                 viewSecretary.Add(new ViewSecretaryDto(secretary.Id, secretary.Name, secretary.Document, secretary.Enabled, secretary.User.Id, secretary.User.Email, secretary.User.Nickname, (int)secretary.User.Permission));
@@ -66,9 +59,7 @@ namespace MedServer.Service
         public IEnumerable<ViewSecretaryDto> Get()
         {
             List<ViewSecretaryDto> viewSecretary = new List<ViewSecretaryDto>();
-
             var secretaries = _repository.Get();
-
             foreach (var secretary in secretaries)
             {
                 viewSecretary.Add(new ViewSecretaryDto(secretary.Id, secretary.Name, secretary.Document, secretary.Enabled, secretary.User.Id, secretary.User.Email, secretary.User.Nickname, (int)secretary.User.Permission));
@@ -79,9 +70,7 @@ namespace MedServer.Service
         public IEnumerable<ViewSecretaryDto> Get(int skip, int take)
         {        
             List<ViewSecretaryDto> viewSecretary = new List<ViewSecretaryDto>();
-
             var secretaries = _repository.Get(skip, take);
-
             foreach (var secretary in secretaries)
             {
                 viewSecretary.Add(new ViewSecretaryDto(secretary.Id, secretary.Name, secretary.Document, secretary.Enabled, secretary.User.Id, secretary.User.Email, secretary.User.Nickname, (int)secretary.User.Permission));
@@ -97,14 +86,12 @@ namespace MedServer.Service
 
         public Secretary Update(EditSecretaryDto secretary)
         {
-            //TODO: o ID do usuário de ser o que vir pelo TOKEN
             var user = _service.Get(secretary.UserId);
             user.ChangeNickname(secretary.Nickname);
             user.ChangePermission((EPermission)secretary.Permission);
             var secretaryTemp = new Secretary(secretary.Id, secretary.Name, secretary.Document, secretary.Enabled, user);
             if (secretaryTemp.Valid)
                 _repository.Update(secretaryTemp);
-
             return secretaryTemp;
         }
 

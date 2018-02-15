@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MedServer.Domain.Dtos.DoctorDtos
+﻿namespace MedServer.Domain.Dtos.DoctorDtos
 {
     public class EditDoctorDto
     {

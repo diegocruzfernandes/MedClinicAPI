@@ -3,9 +3,7 @@ using MedServer.Domain.Dtos.TypeConsultDtos;
 using MedServer.Domain.Entities;
 using MedServer.Domain.Repositories;
 using MedServer.Domain.Services;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace MedServer.Service
 {
@@ -21,28 +19,23 @@ namespace MedServer.Service
         public TypeConsult Create(CreateTypeConsultDto type)
         {
             var typeConsultNew = new TypeConsult(0, type.Name, type.Description, type.Enabled);
-
             if(_repository.TypeConsultExists(typeConsultNew))
             {
                 AddNotification("TypeConsult", "Este modo de consulta já está cadastrado");
                 return null;
             }
-
             if (typeConsultNew.Valid)
                 _repository.Save(typeConsultNew);
-
             return typeConsultNew;
         }
 
         public TypeConsult Delete(int id)
         {
             var typeConsult = _repository.Get(id);
-
             if (typeConsult == null)
                 AddNotification("TypeConsult", "Não foi possivel encontrar o modo de consulta");
             else
                 _repository.Delete(typeConsult);
-
             return typeConsult;
         }
        
@@ -60,12 +53,9 @@ namespace MedServer.Service
         {
             var typeConsult = _repository.Get(type.Id);
             typeConsult.Update(type.Name, type.Description);
-
             if (typeConsult.Enabled) typeConsult.Activate(); else typeConsult.Deactivate();
-
             if (typeConsult.Valid)
                 _repository.Update(typeConsult);
-
             return typeConsult;
         }
 

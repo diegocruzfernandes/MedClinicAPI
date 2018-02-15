@@ -33,7 +33,7 @@ namespace MedServer.Service
 
         public User Get(int id)
         {
-            return _repository.Get(id);         
+            return _repository.Get(id);
         }
 
         public User GetByEmail(string email)
@@ -44,17 +44,13 @@ namespace MedServer.Service
         public User Create(CreateUserDto user)
         {
             var userNew = new User(0, user.Email, user.Password, user.Nickname, (EPermission)user.Permission, user.Enabled);
-
             if (_repository.UserExists(userNew))
             {
                 AddNotification("User", "Usuário já cadastrado!");
                 return null;
             }
-
             if (userNew.Valid)
                 _repository.Save(userNew);
-
-            //var usercmd = ConvertUserToUserDtoAndAddNotifications(userNew);
             return userNew;
         }
 
@@ -62,12 +58,9 @@ namespace MedServer.Service
         {
             var userTmp = _repository.Get(user.Id);
             userTmp.ChangeNickname(user.Nickname);
-
             if (userTmp.Enabled) userTmp.Activate(); else userTmp.Deactivate();
-
             if (userTmp.Valid)
                 _repository.Update(userTmp);
-
             var usercmd = ConvertUserToUserDtoAndAddNotifications(userTmp);
             return usercmd;
         }
@@ -75,12 +68,10 @@ namespace MedServer.Service
         public UserDto Delete(int id)
         {
             var user = _repository.Get(id);
-
             if (user == null)
                 AddNotification("User", "Não foi encontrado o usúario solicitado");
             else
                 _repository.Delete(user);
-
             var usercmd = ConvertUserToUserDtoAndAddNotifications(user);
             return usercmd;
         }
@@ -88,13 +79,11 @@ namespace MedServer.Service
         public ResetPasswordUserDto ResetPassword(int id)
         {
             var user = _repository.Get(id);
-
             if (user == null)
             {
                 AddNotification("User", "Usário não encontrado");
                 return null;
             }
-
             var newPassword = user.ResetPassword();
             _repository.Update(user);
             _emailService.Send(
@@ -103,7 +92,6 @@ namespace MedServer.Service
                  string.Format("Mazzatech - Med Clinic - Important", user.Nickname),
                  string.Format($"Sua nova senha é: {newPassword}.", newPassword)
                 );
-
             var userNewPass = new ResetPasswordUserDto() { Name = user.Nickname, Password = newPassword };
             return userNewPass;
         }
@@ -133,6 +121,6 @@ namespace MedServer.Service
             };
             AddNotifications(user.Notifications);
             return userdto;
-        }  
+        }
     }
 }

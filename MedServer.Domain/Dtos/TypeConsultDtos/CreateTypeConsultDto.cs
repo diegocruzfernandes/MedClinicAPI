@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MedServer.Domain.Dtos.TypeConsultDtos
+﻿namespace MedServer.Domain.Dtos.TypeConsultDtos
 {
     public class CreateTypeConsultDto
     {

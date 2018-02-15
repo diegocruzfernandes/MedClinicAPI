@@ -2,14 +2,12 @@
 using Flunt.Validations;
 using MedServer.Domain.ValueObjects;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MedServer.Domain.Entities
 {
     public class Schedule : Notifiable
     {
-
+        #region ctor
         protected Schedule() { }
 
         public Schedule(int id, Doctor doctor, Patient patient, DateTime initial, DateTime finish, DateTime dateReg, TypeConsult typeConsult, EStatus status)
@@ -25,7 +23,9 @@ namespace MedServer.Domain.Entities
 
             AddNotifications(new Contract());
         }
+        #endregion
 
+        #region prop
         public int Id { get; private set; }
         public DateTime Initial { get; private set; }
         public DateTime Finish { get; private set; }
@@ -35,7 +35,9 @@ namespace MedServer.Domain.Entities
         public virtual Doctor Doctor { get; set; }
         public virtual Patient Patient { get; set; }
         public virtual TypeConsult TypeConsult { get; set; }
+        #endregion
 
+        #region methods
         public void ChangeHours(DateTime initial, DateTime finish)
         {
             Initial = initial;
@@ -51,7 +53,6 @@ namespace MedServer.Domain.Entities
         {
             TypeConsult = typeConsult;
         }
-
-
+        #endregion
     }
 }
