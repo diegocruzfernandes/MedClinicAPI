@@ -14,7 +14,7 @@ namespace MedServer.Infra.Maps
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Nickname).IsRequired().HasMaxLength(60);
             builder.Property(x => x.Email).IsRequired().HasMaxLength(60);
-            builder.Property(x => x.Password).IsRequired().HasMaxLength(32);
+            builder.Property(x => x.Password).IsRequired().HasMaxLength(60);
             builder.Property(x => x.Permission);
             builder.Property(x => x.Enabled);           
         }

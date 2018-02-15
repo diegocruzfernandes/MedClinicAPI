@@ -8,8 +8,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+using System;
 
 namespace MedServer.Api
 {
@@ -28,7 +27,7 @@ namespace MedServer.Api
              .AddJsonOptions(opt =>
              {
                  opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-             });
+             });     
 
             services.AddScoped<DataContext, DataContext>();
             services.AddTransient<IUow, Uow>();
@@ -46,6 +45,7 @@ namespace MedServer.Api
             services.AddTransient<IScheduleRepository, ScheduleRepository>();
             services.AddTransient<IScheduleService, ScheduleService>();
 
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,7 +56,30 @@ namespace MedServer.Api
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors(x =>
+            {
+                x.AllowAnyHeader();
+                x.AllowAnyMethod();
+                x.AllowAnyOrigin();
+            });
+
             app.UseMvc();
+        }
+
+        public static IConfigurationRoot GetConfiguration(string path, string environmentName = null, bool addUserSecrets = false)
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(path)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+            if (!String.IsNullOrWhiteSpace(environmentName))
+            {
+                builder = builder.AddJsonFile($"appsettings.{environmentName}.json", optional: true);
+            }
+
+            builder = builder.AddEnvironmentVariables();
+            
+            return builder.Build();
         }
     }
 }

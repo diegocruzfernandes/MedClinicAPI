@@ -74,7 +74,7 @@ namespace MedServer.Domain.Entities
                .HasMaxLen(Email, 60, "Name", "O Nome não pode ter mais que 60 caracteres")
                .HasMinLen(Nickname, 3, "Nickname", "O Nickname não pode ter menos que 3 caracteres")
                .HasMaxLen(Nickname, 60, "Nickname", "O Nickname não pode ter mais que 60 caracteres")
-               .HasMinLen(Password, 4, "Password", "A Senha deve ter no mínimo 4 caracteres")
+               .HasMinLen(Password, 3, "Password", "A Senha deve ter no mínimo 3 caracteres")
                .HasMaxLen(Password, 60, "Password", "A Senha deve ter no máximo 60 caracteres")
            );
         #endregion

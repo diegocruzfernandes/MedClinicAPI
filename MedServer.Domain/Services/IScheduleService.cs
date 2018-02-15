@@ -11,7 +11,7 @@ namespace MedServer.Domain.Services
 {
     public interface IScheduleService
     {    
-        IEnumerable<Schedule> Get(int skip, int take);
+        IEnumerable<ViewScheduleDto> Get(int skip, int take);
         IEnumerable<Schedule> GetByDoctor(int doctorid, int skip, int take);
         IEnumerable<Schedule> Find(Expression<Func<Schedule, bool>> expression, int skip, int take);
         Schedule Get(int id);

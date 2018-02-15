@@ -22,7 +22,12 @@ namespace MedServer.Infra.Repositories
 
         public void Delete(Patient patient)
         {
-            _context.Entry(patient).State = EntityState.Deleted;
+            var patientDelete = Get(patient.Id);
+            var recordsList = patientDelete.Records.ToList();
+            _context.RemoveRange(recordsList);
+            _context.Remove(patientDelete);
+
+           // _context.Entry(patient).State = EntityState.Deleted;
         }
 
         public IEnumerable<Patient> Find(string name)

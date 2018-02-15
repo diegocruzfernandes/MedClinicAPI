@@ -40,9 +40,7 @@ namespace MedServer.Infra.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder
-                .UseSqlServer(@"Data Source=DON\SQLEXPRESS;Initial Catalog=MedClinic;User ID=sa;Password=admin")
-                ;
-
+                .UseSqlServer(@"Data Source=DON\SQLEXPRESS;Initial Catalog=MedClinic;User ID=sa;Password=admin");
         }
     }
 }

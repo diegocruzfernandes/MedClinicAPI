@@ -17,7 +17,7 @@ namespace MedServer.Domain.Entities
             Enabled = enabled;
             User = user;           
 
-            Schedules = new HashSet<Schedule>();
+            Schedules = new List<Schedule>();
 
             Validate();
         }
@@ -29,7 +29,7 @@ namespace MedServer.Domain.Entities
         public bool Enabled { get; private set; }
         public User User { get; private set; }
 
-        public ICollection<Schedule> Schedules { get; private set; } 
+        public virtual ICollection<Schedule> Schedules { get; private set; } 
 
         public void Update(string name, string speciality, string codeRegister)
         {

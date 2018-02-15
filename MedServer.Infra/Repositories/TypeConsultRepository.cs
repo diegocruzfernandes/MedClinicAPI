@@ -20,7 +20,10 @@ namespace MedServer.Infra.Repositories
 
         public void Delete(TypeConsult type)
         {
-            _context.Entry(type).State = EntityState.Deleted;
+            var typeDelete = Get(type.Id);
+            var typeList = _context.Schedules.Include(t => t.TypeConsult).AsNoTracking().Where(x => x.TypeConsult.Id == type.Id);
+            _context.RemoveRange(typeList);
+            _context.Remove(typeDelete);
         }
 
         public IEnumerable<TypeConsult> Get()

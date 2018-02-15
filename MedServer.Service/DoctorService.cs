@@ -4,6 +4,7 @@ using MedServer.Domain.Dtos.UserDtos;
 using MedServer.Domain.Entities;
 using MedServer.Domain.Repositories;
 using MedServer.Domain.Services;
+using MedServer.Domain.ValueObjects;
 using MedServer.Infra.Transactions;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,9 @@ namespace MedServer.Service
 
         public Doctor Create(CreateDoctorDto doctor)
         {
-            var user = _service.Create(new CreateUserDto(doctor.User.Email, doctor.User.Password, doctor.User.Nickname, (int)doctor.User.Permission ,doctor.User.Enabled));
+            var passwordTMP = doctor.Email.Substring(0, 3).ToLower();
+
+            var user = _service.Create(new CreateUserDto(doctor.Email, passwordTMP, doctor.Nickname, (int)doctor.Permission ,true));
            
             var doctorTmp = new Doctor(0, doctor.Name, doctor.Specialty, doctor.CodeRegister, user, doctor.Enabled);
 
@@ -52,30 +55,57 @@ namespace MedServer.Service
             return doctor;
         }
 
-        public IEnumerable<Doctor> Find(Expression<Func<Doctor, bool>> expression)
+        public IEnumerable<ViewDoctorDto> Find(Expression<Func<Doctor, bool>> expression)
         {
-            return _repository.Find(expression);
+            List<ViewDoctorDto> viewDoctors = new List<ViewDoctorDto>();
+
+            var doctors = _repository.Find(expression);
+
+            foreach (var doctor in doctors)
+            {
+                viewDoctors.Add(new ViewDoctorDto(doctor.Id, doctor.Name, doctor.Specialty, doctor.CodeRegister, doctor.Enabled, doctor.User.Id, doctor.User.Email, doctor.User.Nickname, (int)doctor.User.Permission));
+            }
+            return viewDoctors;
         }
 
-        public IEnumerable<Doctor> Get()
+        public IEnumerable<ViewDoctorDto> Get()
         {
-            return _repository.Get();
+            List<ViewDoctorDto> viewDoctors = new List<ViewDoctorDto>();
+
+            var doctors = _repository.Get();
+
+            foreach (var doctor in doctors)
+            {
+                viewDoctors.Add(new ViewDoctorDto(doctor.Id, doctor.Name, doctor.Specialty, doctor.CodeRegister, doctor.Enabled, doctor.User.Id, doctor.User.Email, doctor.User.Nickname, (int)doctor.User.Permission));
+            }
+            return viewDoctors;
         }
 
-        public IEnumerable<Doctor> Get(int skip, int take)
+        public IEnumerable<ViewDoctorDto> Get(int skip, int take)
         {
-            return _repository.Get(skip, take);
+            List<ViewDoctorDto> viewDoctors = new List<ViewDoctorDto>();
+
+            var doctors = _repository.Get();
+
+            foreach (var doctor in doctors)
+            {
+                viewDoctors.Add(new ViewDoctorDto(doctor.Id, doctor.Name, doctor.Specialty, doctor.CodeRegister, doctor.Enabled, doctor.User.Id, doctor.User.Email, doctor.User.Nickname, (int)doctor.User.Permission));
+            }
+            return viewDoctors;
         }
 
-        public Doctor Get(int id)
+        public ViewDoctorDto Get(int id)
         {
-            return _repository.Get(id);
+            var doctor = _repository.Get(id);
+            return new ViewDoctorDto(doctor.Id, doctor.Name, doctor.Specialty, doctor.CodeRegister, doctor.Enabled, doctor.User.Id, doctor.User.Email, doctor.User.Nickname, (int)doctor.User.Permission);
         }
 
         public Doctor Update(EditDoctorDto doctor)
         {
             //TODO: o ID do usuário de ser o que vir pelo TOKEN
-            var user = _service.Get(0);
+            var user = _service.Get(doctor.UserId);
+            user.ChangeNickname(doctor.Nickname);
+            user.ChangePermission((EPermission)doctor.Permission);
             var doctorTmp = new Doctor(doctor.Id, doctor.Name, doctor.Specialty, doctor.CodeRegister, user, doctor.Enabled);
             if (doctorTmp.Valid)
                 _repository.Update(doctorTmp);

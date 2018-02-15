@@ -1,18 +1,16 @@
-﻿using MedServer.Domain.Dtos.UserDtos;
-using MedServer.Domain.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MedServer.Domain.Dtos.DoctorDtos
+namespace MedServer.Domain.Dtos.SecretaryDtos
 {
-    public class CreateDoctorDto
+    public class ViewSecretaryDto
     {
-        public CreateDoctorDto(string name, string specialty, string codeRegister, bool enabled, int userid, string email, string nickname, int permission)
+        public ViewSecretaryDto(int id, string name, string document, bool enabled, int userid, string email, string nickname, int permission)
         {
+            Id = id;
             Name = name;
-            Specialty = specialty;
-            CodeRegister = codeRegister;
+            Document = document;
             Enabled = enabled;
             Userid = userid;
             Email = email;
@@ -20,9 +18,9 @@ namespace MedServer.Domain.Dtos.DoctorDtos
             Permission = permission;
         }
 
+        public int Id { get; set; }
         public string Name { get; set; }
-        public string Specialty { get; set; }
-        public string CodeRegister { get; set; }
+        public string Document { get; set; }
         public bool Enabled { get; set; }
         public int Userid { get; set; }
         public string Email { get; set; }

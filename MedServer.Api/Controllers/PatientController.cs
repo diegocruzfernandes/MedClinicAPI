@@ -23,6 +23,11 @@ namespace MedServer.Api.Controllers
         [Route("v1/patient")]
         public async Task<IActionResult> Post([FromBody] CreatePatientDto patient)
         {
+            if(patient == null)
+            {
+                return await ResponseNullOrEmpty();
+            }
+
             var listError = ValidPropertiesObject.ObjIsValid(patient);
             if (listError.Count > 0)
                 return await ResponseNullOrEmpty(listError);

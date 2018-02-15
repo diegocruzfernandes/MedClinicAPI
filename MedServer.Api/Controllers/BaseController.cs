@@ -75,6 +75,15 @@ namespace MedServer.Api.Controllers
                 errors = new[] { "Dados não preenchidos ou inválidos." },
                 data = listError
             });
-        }        
+        }
+
+        public async Task<IActionResult> ResponseNullOrEmpty()
+        {
+            return BadRequest(new
+            {
+                success = false,
+                errors = new[] { "Dados não preenchidos ou inválidos." }
+            });
+        }
     }
 }

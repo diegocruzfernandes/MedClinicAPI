@@ -9,6 +9,7 @@ namespace MedServer.Domain.Entities
 {
     public class Schedule : Notifiable
     {
+
         protected Schedule() { }
 
         public Schedule(int id, Doctor doctor, Patient patient, DateTime initial, DateTime finish, DateTime dateReg, TypeConsult typeConsult, EStatus status)
@@ -33,7 +34,7 @@ namespace MedServer.Domain.Entities
 
         public virtual Doctor Doctor { get; set; }
         public virtual Patient Patient { get; set; }
-        public virtual TypeConsult TypeConsult { get;  set; }
+        public virtual TypeConsult TypeConsult { get; set; }
 
         public void ChangeHours(DateTime initial, DateTime finish)
         {

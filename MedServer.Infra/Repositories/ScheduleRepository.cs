@@ -43,6 +43,8 @@ namespace MedServer.Infra.Repositories
                     .Include(p => p.Patient)
                     .Include(p => p.TypeConsult)
                     .Include(d => d.Doctor)
+                    .Include(u => u.Doctor.User)
+                    .AsNoTracking()
                     .Skip(skip)
                     .Take(take)
                     .ToList();

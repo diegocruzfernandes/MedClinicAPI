@@ -18,28 +18,32 @@ namespace MedServer.Infra.Repositories
 
         public void Delete(Secretary secretary)
         {
-             
-            _context.Entry(secretary).State = EntityState.Deleted;
+            var secretaryDelete = Get(secretary.Id);
+            var user = secretaryDelete.User;
+           
+            _context.Remove(user);
+            _context.Remove(secretaryDelete);
+
         }
 
         public IEnumerable<Secretary> Find(string name)
         {
-            return _context.Secretaries.Where(x => x.Name == name);
+            return _context.Secretaries.Include(u => u.User).AsNoTracking().Where(x => x.Name == name);
         }
 
         public IEnumerable<Secretary> Get()
         {
-            return _context.Secretaries.OrderBy(d => d.Name).ToList();
+            return _context.Secretaries.Include(u => u.User).AsNoTracking().OrderBy(d => d.Name).ToList();
         }
 
         public IEnumerable<Secretary> Get(int skip, int take)
         {
-            return _context.Secretaries.OrderBy(d => d.Name).Skip(skip).Take(take).ToList();
+            return _context.Secretaries.Include(u => u.User).AsNoTracking().OrderBy(d => d.Name).Skip(skip).Take(take).ToList();
         }
 
         public Secretary Get(int id)
         {
-            return _context.Secretaries.FirstOrDefault(x => x.Id == id); ;
+            return _context.Secretaries.Include(u => u.User).AsNoTracking().FirstOrDefault(x => x.Id == id); ;
         }
 
         public void Save(Secretary secretary)

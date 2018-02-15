@@ -7,17 +7,23 @@ namespace MedServer.Domain.Dtos.SecretaryDtos
 {
     public class CreateSecretaryDto
     {
-        public CreateSecretaryDto(string name, string document, bool enabled, CreateUserDto user)
+        public CreateSecretaryDto(string name, string document, bool enabled, int userid, string email, string nickname, int permission)
         {
             Name = name;
             Document = document;
             Enabled = enabled;
-            User = user;
+            Userid = userid;
+            Email = email;
+            Nickname = nickname;
+            Permission = permission;
         }
 
-        public string Name { get;  set; }
-        public string Document { get;  set; }
-        public bool Enabled { get;  set; }
-        public CreateUserDto User { get;  set; }
+        public string Name { get; set; }
+        public string Document { get; set; }
+        public bool Enabled { get; set; }
+        public int Userid { get; set; }
+        public string Email { get; set; }
+        public string Nickname { get; set; }
+        public int Permission { get; set; }
     }
 }

@@ -7,10 +7,10 @@ namespace MedServer.Domain.Services
 {
     public interface ISecretaryService
     {
-        IEnumerable<Secretary> Get();
-        IEnumerable<Secretary> Get(int skip, int take);
-        IEnumerable<Secretary> Find(string name);
-        Secretary Get(int id);
+        IEnumerable<ViewSecretaryDto> Get();
+        IEnumerable<ViewSecretaryDto> Get(int skip, int take);
+        IEnumerable<ViewSecretaryDto> Find(string name);
+        ViewSecretaryDto Get(int id);
         Secretary Create(CreateSecretaryDto secretary);
         Secretary Update(EditSecretaryDto secretary);
         Secretary Delete(int id);

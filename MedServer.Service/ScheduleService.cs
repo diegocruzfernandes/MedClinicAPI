@@ -16,21 +16,21 @@ namespace MedServer.Service
     {
         private readonly IScheduleRepository _repository;
 
-        private readonly IDoctorService _serviceDoctor;
-        private readonly IPatientService _servicePatient;
-        private readonly ITypeConsultService _serviceTypeConsult;
+        private readonly IDoctorRepository _repositoryDoctor;
+        private readonly IPatientRepository _repositoryPatient;
+        private readonly ITypeConsultRepository _repositoryTypeConsult;
 
         public ScheduleService(
             IScheduleRepository repository,
-            IDoctorService serviceDoctor,
-            IPatientService servicePatient,
-            ITypeConsultService serviceTypeConsult
+            IDoctorRepository repositoryDoctor,
+            IPatientRepository repositoryPatient,
+            ITypeConsultRepository repositoryTypeConsult
             )
         {
             _repository = repository;
-            _serviceDoctor = serviceDoctor;
-            _servicePatient = servicePatient;
-            _serviceTypeConsult = serviceTypeConsult;
+            _repositoryDoctor = repositoryDoctor;
+            _repositoryPatient = repositoryPatient;
+            _repositoryTypeConsult = repositoryTypeConsult;
         }
 
         public Schedule ChangeStatus(int id, EStatus status)
@@ -55,9 +55,9 @@ namespace MedServer.Service
                 return null;
             }
 
-            var doctor = _serviceDoctor.Get(schedule.DoctorId);
-            var patient = _servicePatient.Get(schedule.PatientId);
-            var typeConsult = _serviceTypeConsult.Get(schedule.TypeConsultId);
+            var doctor = _repositoryDoctor.Get(schedule.DoctorId);
+            var patient = _repositoryPatient.Get(schedule.PatientId);
+            var typeConsult = _repositoryTypeConsult.Get(schedule.TypeConsultId);
             
             var scheduleTmp = new Schedule(0, doctor, patient, schedule.Initial, schedule.Finish, DateTime.Now, typeConsult, (EStatus)schedule.Status);
 
@@ -84,9 +84,17 @@ namespace MedServer.Service
             return _repository.Find(expression, skip, take);
         }
 
-        public IEnumerable<Schedule> Get(int skip, int take)
+        public IEnumerable<ViewScheduleDto> Get(int skip, int take)
         {
-            return _repository.Get(skip, take);
+            List<ViewScheduleDto> list = new List<ViewScheduleDto>();
+
+            var schedule = _repository.Get(skip, take);
+            foreach (var item in schedule)
+            {
+                list.Add(new ViewScheduleDto(item.Id, item.Patient.Id, item.Patient.Name, item.Doctor.Id, item.Doctor.User.Nickname, item.TypeConsult.Id, item.TypeConsult.Name, (int)item.Status, Enum.GetName(typeof(EStatus), item.Status), item.Initial, item.Finish));
+            }
+
+            return list;
         }
 
         public Schedule Get(int id)

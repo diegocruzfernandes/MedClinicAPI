@@ -6,14 +6,14 @@ namespace MedServer.Domain.Dtos.PatientDtos
 {
     public class CreatePatientDto
     {
-        public CreatePatientDto(string name, int gender, string email, string phoneNumber, string details, DateTime birthDate, bool enabled)
+        public CreatePatientDto(string name, int gender, string email, string phonenumber, string details, DateTime birthdate, bool enabled)
         {
             Name = name;
             Gender = gender;
             Email = email;
-            PhoneNumber = phoneNumber;
+            PhoneNumber = phonenumber;
             Details = details;
-            BirthDate = birthDate;
+            BirthDate = birthdate;
             Enabled = enabled;
         }
 

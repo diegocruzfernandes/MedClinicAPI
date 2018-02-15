@@ -20,9 +20,13 @@ namespace MedServer.Infra.Repositories
 
         public void Delete(Doctor doctor)
         {
-            //_context.Entry(doctor.User) = EntityState.Deleted;
-            _context.Remove(doctor);
-            //_context.Entry(doctor).State = EntityState.Deleted;
+            var doctorDelete = Get(doctor.Id);
+            var user = doctorDelete.User;
+            var sheduleList = _context.Schedules.Include(s => s.Doctor).AsNoTracking().Where(x => x.Doctor.Id == doctor.Id).ToList();
+
+            _context.Remove(user);
+            _context.RemoveRange(sheduleList);
+            _context.Remove(doctorDelete);
         }
 
         public bool DoctorExists(Doctor doctor)
@@ -32,22 +36,22 @@ namespace MedServer.Infra.Repositories
 
         public IEnumerable<Doctor> Find(Expression<Func<Doctor, bool>> expression)
         {    
-            return _context.Doctors.Where(expression);
+            return _context.Doctors.Include(u => u.User).AsNoTracking().Where(expression);
         }
 
         public IEnumerable<Doctor> Get()
         {
-            return _context.Doctors.OrderBy(d => d.Name).ToList();
+            return _context.Doctors.Include(u => u.User).AsNoTracking().OrderBy(d => d.Name).ToList();
         }
 
         public IEnumerable<Doctor> Get(int skip, int take)
         {
-            return _context.Doctors.OrderBy(d => d.Name).Skip(skip).Take(take).ToList();
+            return _context.Doctors.Include(u => u.User).AsNoTracking().OrderBy(d => d.Name).Skip(skip).Take(take).ToList();
         }
 
         public Doctor Get(int id)
         {
-            return _context.Doctors.FirstOrDefault(x => x.Id == id);
+            return _context.Doctors.Include(u => u.User).AsNoTracking().FirstOrDefault(x => x.Id == id);
         }
 
         public void Save(Doctor doctor)

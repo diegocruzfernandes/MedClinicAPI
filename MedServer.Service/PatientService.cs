@@ -47,14 +47,15 @@ namespace MedServer.Service
             return _repository.Get(skip, take);
         }
 
-        public Patient Get(int id)
+        public ViewPatientDto Get(int id)
         {
-            return _repository.Get(id);
+            var patient = _repository.Get(id);
+            return new ViewPatientDto(patient.Id, patient.Name, (int)patient.Gender, patient.Email, patient.PhoneNumber, patient.Details, patient.BirthDate, patient.Enabled);
         }
 
         public Patient Update(EditPatientDto patient)
         {
-            var patientTmp = new Patient(patient.Id, patient.Name, (EGender)patient.Gender, patient.Email, patient.PhoneNumber, patient.Details, patient.BirthDate, patient.Enabled);
+            var patientTmp = new Patient(patient.id, patient.name, (EGender)patient.gender, patient.email, patient.phonenumber, patient.details, patient.birthdate, patient.enabled);
 
             if (patientTmp.Valid)
                 _repository.Update(patientTmp);
@@ -74,6 +75,7 @@ namespace MedServer.Service
             if (patient == null)
                 AddNotification("Patient", "Não foi encontrado o Paciente solicitado");
             else
+
                 _repository.Delete(patient);
 
             return patient;
