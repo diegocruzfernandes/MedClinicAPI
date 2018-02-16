@@ -2,6 +2,7 @@
 using MedServer.Domain.Dtos.SheduleDtos;
 using MedServer.Domain.Services;
 using MedServer.Infra.Transactions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace MedServer.Api.Controllers
 {
+
     public class ScheduleController : BaseController
     {
         private readonly IScheduleService _service;

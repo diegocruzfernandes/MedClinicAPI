@@ -9,7 +9,7 @@ namespace MedServer.Domain.Services
     {
         IEnumerable<Patient> Get();
         IEnumerable<Patient> Get(int skip, int take);
-        IEnumerable<Patient> Find(string name);
+        IEnumerable<Patient> Find(string name, int skip, int take);
         ViewPatientDto Get(int id);
         Patient Create(CreatePatientDto patient);
         Patient Update(EditPatientDto patient);

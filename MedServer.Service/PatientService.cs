@@ -27,9 +27,9 @@ namespace MedServer.Service
             return patientTmp;
         }
 
-        public IEnumerable<Patient> Find(string name)
+        public IEnumerable<Patient> Find(string name, int skip, int take)
         {
-            return _repository.Find(name);
+            return _repository.Find(name, skip, take);
         }
 
         public IEnumerable<Patient> Get()

@@ -1,5 +1,6 @@
 ﻿using Flunt.Notifications;
 using MedServer.Domain.Entities;
+using MedServer.Domain.Shared;
 using MedServer.Infra.Maps;
 using Microsoft.EntityFrameworkCore;
 
@@ -35,7 +36,7 @@ namespace MedServer.Infra.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder
-                .UseSqlServer(@"Data Source=DON\SQLEXPRESS;Initial Catalog=MedClinic;User ID=sa;Password=admin");
+                .UseSqlServer(ConfigsAppSettings.SQLConnectionString);
         }
     }
 }

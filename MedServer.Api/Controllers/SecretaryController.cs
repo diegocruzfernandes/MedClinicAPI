@@ -2,6 +2,7 @@
 using MedServer.Domain.Dtos.SecretaryDtos;
 using MedServer.Domain.Services;
 using MedServer.Infra.Transactions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace MedServer.Api.Controllers
 {
-    public class SecretaryController: BaseController
+       public class SecretaryController: BaseController
     {
         private readonly ISecretaryService _service;
 
@@ -66,6 +67,7 @@ namespace MedServer.Api.Controllers
             return await Response(result, _service.Validate());
         }
 
+        [Authorize(Policy = "Secretaries")]
         [HttpPut]
         [Route("v1/secretary")]
         public async Task<IActionResult> Update([FromBody] EditSecretaryDto secretary)

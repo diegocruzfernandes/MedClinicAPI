@@ -2,6 +2,7 @@
 using MedServer.Domain.Dtos.PatientDtos;
 using MedServer.Domain.Services;
 using MedServer.Infra.Transactions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace MedServer.Api.Controllers
 {
+
     public class PatientController : BaseController
     {
         private readonly IPatientService _service;
@@ -23,7 +25,7 @@ namespace MedServer.Api.Controllers
         [Route("v1/patient")]
         public async Task<IActionResult> Post([FromBody] CreatePatientDto patient)
         {
-            if(patient == null)
+            if (patient == null)
             {
                 return await ResponseNullOrEmpty();
             }
@@ -35,14 +37,14 @@ namespace MedServer.Api.Controllers
             var result = _service.Create(patient);
             return await Response(result, _service.Validate());
         }
-               
+
         [HttpGet]
         [Route("v1/patient")]
         public async Task<IActionResult> GetByRange(
           [FromQuery(Name = "page_size")]int page_size,
-          [FromQuery(Name = "page")]int page)
+          [FromQuery(Name = "page")]int page)        
         {
-            if(page_size == 0 && page == 0)
+            if (page_size == 0 && page == 0)
             {
                 var result = _service.Get();
                 return await ResponseList(result);
@@ -52,7 +54,19 @@ namespace MedServer.Api.Controllers
                 var skip = (page - 1) * page_size;
                 var result = _service.Get(skip, page_size);
                 return await ResponseList(result);
-            }           
+            }
+        }
+
+        [HttpGet]
+        [Route("v1/patient/find")]
+        public async Task<IActionResult> Find(
+          [FromQuery(Name = "page_size")]int page_size,
+          [FromQuery(Name = "page")]int page,
+          [FromQuery(Name = "text")]string text)
+        {           
+            var skip = (page - 1) * page_size;
+            var result = _service.Find(text, skip, page_size);
+            return await ResponseList(result);            
         }
 
         [HttpGet]

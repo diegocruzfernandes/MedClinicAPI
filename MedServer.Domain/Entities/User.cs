@@ -38,7 +38,7 @@ namespace MedServer.Domain.Entities
         #region Methods
         public bool Authenticate(string email, string password)
         {
-            if (Email == email && Password == ValidationPassword.Encrypt(Password))
+            if (Email == email && Password == ValidationPassword.Encrypt(password))
                 return true;
 
             AddNotification("User", "Usuário ou senha inválido!");
@@ -65,6 +65,31 @@ namespace MedServer.Domain.Entities
         public void ChangePermission(EPermission permission)
         {
             Permission = permission;
+        }
+
+        public string[] GetListPermission()
+        {
+            string[] list;
+
+            switch (Permission)
+            {
+                case EPermission.Admin:
+                    list = new string[]{ EPermission.Admin.ToString(), EPermission.Doctor.ToString(), EPermission.Secretary.ToString(), EPermission.User.ToString() };
+                    break;
+                case EPermission.Doctor:
+                    list = new string[] { EPermission.Doctor.ToString(), EPermission.Secretary.ToString(), EPermission.User.ToString() };
+                    break;
+                case EPermission.Secretary:
+                    list = new string[] { EPermission.Secretary.ToString(), EPermission.User.ToString() };
+                    break;
+                case EPermission.User:
+                    list = new string[] {EPermission.User.ToString() };
+                    break;
+                default:
+                    list = new string[] { EPermission.User.ToString() };
+                    break;
+            }
+            return list;
         }
 
         public void Validate() => AddNotifications(new Contract()

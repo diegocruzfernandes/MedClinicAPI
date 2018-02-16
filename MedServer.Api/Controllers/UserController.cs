@@ -2,6 +2,7 @@
 using MedServer.Domain.Dtos.UserDtos;
 using MedServer.Domain.Services;
 using MedServer.Infra.Transactions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,8 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace MedServer.Api.Controllers
-{
+{    
+    [Authorize(Policy = "Doctors")]
     public class UserController : BaseController
     {
         private readonly IUserService _service;
@@ -18,20 +20,6 @@ namespace MedServer.Api.Controllers
         {
             _service = service;
         }
-
-        /* - O Uswe é criado pelo Doctor ou Secretary
-        [HttpPost]
-        [Route("v1/user")]
-        public async Task<IActionResult> Post([FromBody] CreateUserDto user)
-        {
-            var listError = ValidPropertiesObject.ObjIsValid(user);
-            if (listError.Count > 0)
-                return await ResponseNullOrEmpty(listError);
-
-            var result = _service.Create(user);
-            return await Response(result, _service.Validate());
-        }
-        */
 
         [HttpGet]
         [Route("v1/user")]

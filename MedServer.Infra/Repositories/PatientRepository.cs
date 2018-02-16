@@ -24,9 +24,14 @@ namespace MedServer.Infra.Repositories
             _context.Remove(patientDelete);
         }
 
-        public IEnumerable<Patient> Find(string name)
+        public IEnumerable<Patient> Find(string name, int skip, int take)
         {
-            return _context.Patients.Include(x => x.Records).AsNoTracking().Where(x => x.Name == name);
+            return _context.Patients
+                    .OrderBy(u => u.Name)
+                    .Skip(skip)
+                    .Take(take)
+                    .Where(x => x.Name.Contains(name))
+                    .ToList(); ;
         }
 
         public IEnumerable<Patient> Get()

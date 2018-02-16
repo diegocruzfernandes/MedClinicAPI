@@ -7,7 +7,7 @@ namespace MedServer.Domain.Repositories
     {
         IEnumerable<Patient> Get();
         IEnumerable<Patient> Get(int skip, int take);
-        IEnumerable<Patient> Find(string name);
+        IEnumerable<Patient> Find(string name, int skip, int take);
         Patient Get(int id);
         void Save(Patient patient);
         void Update(Patient patient);
