@@ -19,7 +19,10 @@ Os serviços estão padronizados nos comando HTTP/REST, assim como seu comandos/
 Primeiro Acesso:\
 Utilizaremos como exemplo o Swagger que está diponível em https://medclinic.azurewebsites.net/swagger/
 As rotas estão bloqueadas, assim antes de mais nada é necessário adquirir um TOKEN para fazer uso dos serviços existentes.\
-Como exemplo iremos utilizar um usuário: **doctor**  com email: **doctor@mail.com** e senha **doctor**
+Como exemplo podemos utilizar os usuários: 
+- **Mônica**  com email: **monica@mail.com** e senha **monica**
+- **Cebolinha**  com email: **cebolinha@mail.com** e senha **cebolinha**
+- Ao listar as senhas são nomes antes do @ de cada email (Médicos e Secretárias)
 
 Clicando em Account devemos preencher os dados de Email e Password
 ![alt text](http://uploaddeimagens.com.br/images/001/201/435/full/01a.png)
