@@ -1,5 +1,5 @@
 # MedClinic - API
-Autor: Diego Fernandes  - Versão: 1.0.1 (15/02/2018)
+Autor: Diego Fernandes  - Versão: 1.0.2 (15/02/2018)
 contatos: diegocruzfernandes@hotmail.com
 
 ---
@@ -25,7 +25,7 @@ Como exemplo podemos utilizar os usuários:
 - Ao listar as senhas são nomes antes do @ de cada email (Médicos e Secretárias)
 
 Clicando em Account devemos preencher os dados de Email e Password
-![alt text](http://uploaddeimagens.com.br/images/001/201/435/full/01a.png)
+![alt text](http://uploaddeimagens.com.br/images/001/295/687/original/medclinic01.jpg)
 
 
 Para uso através de comandos o acesso deve ser feito através da rota: https://medclinic.azurewebsites.net/v1/account
@@ -36,12 +36,12 @@ deve-se realizar um POST contendo em seu cabeçalho:
 
 ```
 Exemplo: 
->curl -X POST --header 'Content-Type: application/x-www-form-urlencoded' --header 'Accept: text/plain' -d 'Email=doctor%40mail.com&Password=doctor' 'https://medclinic.azurewebsites.net/v1/account'
+>curl -X POST --header 'Content-Type: application/x-www-form-urlencoded' --header 'Accept: text/plain' -d 'Email=monica%40mail.com&Password=monica' 'https://medclinic.azurewebsites.net/v1/account'
 ```
 
 É esperado no Corpo/Body um JSON com resposta:
 
-![alt text](http://uploaddeimagens.com.br/images/001/201/438/full/01bb.png)
+![alt text](http://uploaddeimagens.com.br/images/001/295/689/original/medclinic02.jpg?1518997587)
 
 São informado dados como:
 - token: valor encriptografado da chave de acesso. 
@@ -117,8 +117,9 @@ Como base de arquitetura o projeto se baseou no modelo DDD (Domain Driven Design
 ---
 ### TODO
 
-1 - Teste de integração - Apenas foi feito Smoke Tests\
-2 - Melhorar a cobertura de código e testes com ferramentas como OpenCover ou SonarQube\
-3 - Implementar o serviço de envio de E-mail's\
-4 - Logs para Autenticações e Falhas
-5 - Tranduzir o Readme para o idioma Inglês
+1 - Teste unitário 
+2 - Teste de integração
+3 - Melhorar a cobertura de código e testes com ferramentas como OpenCover ou SonarQube\
+4 - Implementar o serviço de envio de E-mail's\
+5 - Logs para Autenticações e Falhas
+6 - Tranduzir o Readme para o idioma Inglês
