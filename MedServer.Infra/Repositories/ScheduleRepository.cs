@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 
 namespace MedServer.Infra.Repositories
 {
@@ -23,17 +22,6 @@ namespace MedServer.Infra.Repositories
             _context.Entry(schedule).State = EntityState.Deleted;
         }
 
-        public IEnumerable<Schedule> Find(Expression<Func<Schedule, bool>> expression, int skip, int take)
-        {
-            return _context
-                .Schedules
-                .Include(p => p.Patient)
-                .Include(t => t.TypeConsult)
-                .Where(expression)
-                .Skip(skip)
-                .Take(take);
-        }
-
         public IEnumerable<Schedule> Get(int skip, int take)
         {
             return _context.Schedules
@@ -42,6 +30,21 @@ namespace MedServer.Infra.Repositories
                     .Include(p => p.TypeConsult)
                     .Include(d => d.Doctor)
                     .Include(u => u.Doctor.User)
+                    .AsNoTracking()
+                    .Skip(skip)
+                    .Take(take)
+                    .ToList();
+        }
+
+        public IEnumerable<Schedule> GetFull(int skip, int take, string patientName)
+        {
+            return _context.Schedules
+                    .OrderBy(u => u.Initial)
+                    .Include(p => p.TypeConsult)
+                    .Include(d => d.Doctor)
+                    .Include(u => u.Doctor.User)
+                    .Include(p => p.Patient)
+                    .Where(x => x.Patient.Name.Contains(patientName))
                     .AsNoTracking()
                     .Skip(skip)
                     .Take(take)
@@ -70,6 +73,6 @@ namespace MedServer.Infra.Repositories
         {
             var valid = _context.Schedules.Where(d => d.Initial >= date && d.Finish <= date).Any();
             return !valid;
-        }
+        }      
     }
 }

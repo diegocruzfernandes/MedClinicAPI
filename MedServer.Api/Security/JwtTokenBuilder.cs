@@ -2,9 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace MedServer.Api.Security
 {
@@ -16,7 +14,7 @@ namespace MedServer.Api.Security
         private string audience = "";
         private string nameId = "";
         private Dictionary<string, string> claims = new Dictionary<string, string>();
-        private int expiryInMinutes = 1440; //one day per Defalut
+        private int expiryInMinutes = 2880; 
 
         public JwtTokenBuilder AddSecurityKey(SecurityKey securityKey)
         {
@@ -62,7 +60,7 @@ namespace MedServer.Api.Security
             }
             return this;
         }
-               
+
         public JwtTokenBuilder AddExpiry(int expiryInMinutes)
         {
             this.expiryInMinutes = expiryInMinutes;
@@ -81,17 +79,17 @@ namespace MedServer.Api.Security
             {
                 claimsList.Add(new Claim(item.Key.ToString().ToLower(), item.Value.ToString().ToLower()));
             }
-            
-    var token = new JwtSecurityToken(
-                              issuer: this.issuer,
-                              audience: this.audience,
-                              claims: claimsList,
-                              expires: DateTime.UtcNow.AddMinutes(expiryInMinutes),
-                              signingCredentials: new SigningCredentials(
-                                                        this.securityKey,
-                                                        SecurityAlgorithms.HmacSha256));
+
+            var token = new JwtSecurityToken(
+                                      issuer: this.issuer,
+                                      audience: this.audience,
+                                      claims: claimsList,
+                                      expires: DateTime.UtcNow.AddMinutes(expiryInMinutes),
+                                      signingCredentials: new SigningCredentials(
+                                                                this.securityKey,
+                                                                SecurityAlgorithms.HmacSha256));
 
             return new JwtSecurityTokenHandler().WriteToken(token);
-}
+        }
     }
 }

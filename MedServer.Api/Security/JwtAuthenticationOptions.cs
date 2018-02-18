@@ -3,16 +3,16 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MedServer.Api.Security
 {
     public class JwtAuthenticationOptions
     {
+        protected JwtAuthenticationOptions() { }
+
         public static void Configure(IServiceCollection services, IConfiguration config)
         {
-
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("Authenticated", policy => policy.RequireAuthenticatedUser());

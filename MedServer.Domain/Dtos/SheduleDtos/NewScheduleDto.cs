@@ -10,7 +10,5 @@ namespace MedServer.Domain.Dtos.SheduleDtos
         public string patient { get; set; }
         public ViewDoctorDto doctor { get; set; }
         public ViewTypeConsultDto typeconsult { get; set; }
-    }
-
-    
+    }    
 }

@@ -2,17 +2,13 @@
 using MedServer.Domain.Dtos.SheduleDtos;
 using MedServer.Domain.Entities;
 using MedServer.Domain.ValueObjects;
-using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 
 namespace MedServer.Domain.Services
 {
     public interface IScheduleService
     {    
-        IEnumerable<ViewScheduleDto> Get(int skip, int take);
-        IEnumerable<Schedule> GetByDoctor(int doctorid, int skip, int take);
-        IEnumerable<Schedule> Find(Expression<Func<Schedule, bool>> expression, int skip, int take);
+        IEnumerable<ViewScheduleDto> GetAll(int skip, int take, string patientName);
         Schedule Get(int id);
         Schedule Create(CreateScheduleDto schedule);
         Schedule Update(EditScheduleDto schedule);

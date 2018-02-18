@@ -2,7 +2,6 @@
 using MedServer.Domain.Dtos.TypeConsultDtos;
 using MedServer.Domain.Services;
 using MedServer.Infra.Transactions;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 

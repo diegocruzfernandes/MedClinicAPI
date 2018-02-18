@@ -2,14 +2,10 @@
 using MedServer.Domain.Dtos.DoctorDtos;
 using MedServer.Domain.Services;
 using MedServer.Infra.Transactions;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Threading.Tasks;
 
 namespace MedServer.Api.Controllers
-{   
-
 
     public class DoctorController : BaseController
     {

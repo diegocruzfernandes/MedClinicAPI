@@ -21,9 +21,13 @@ namespace MedServer.Service
         }
 
         public Secretary Create(CreateSecretaryDto secretary)
-        {
-            var passwordTMP = secretary.Email.Substring(0, 3).ToLower();
-            var user = _service.Create(new CreateUserDto(secretary.Email, passwordTMP, secretary.Nickname, secretary.Permission, secretary.Enabled));
+        {           
+            var user = _service.Create(new CreateUserDto(secretary.Email, secretary.Password, secretary.Nickname, (int)EPermission.Secretary, secretary.Enabled));
+            if (user.Invalid)
+            {
+                AddNotifications(user.Notifications);
+                return null;
+            }
             var secretaryTemp = new Secretary(0, secretary.Name, secretary.Document, secretary.Enabled, user);
 
             if (_repository.SecretaryExists(secretaryTemp))

@@ -24,8 +24,12 @@ namespace MedServer.Service
 
         public Doctor Create(CreateDoctorDto doctor)
         {
-            var passwordTMP = doctor.Email.Substring(0, 3).ToLower();
-            var user = _service.Create(new CreateUserDto(doctor.Email, passwordTMP, doctor.Nickname, (int)doctor.Permission ,true));           
+            var user = _service.Create(new CreateUserDto(doctor.Email, doctor.Password, doctor.Nickname, (int)EPermission.Doctor ,true));
+            if (user.Invalid)
+            {
+                AddNotifications(user.Notifications);
+                return null;
+            }
             var doctorTmp = new Doctor(0, doctor.Name, doctor.Specialty, doctor.CodeRegister, user, doctor.Enabled);
             if (_repository.DoctorExists(doctorTmp))
                 AddNotification("Doctor", "O Médico já existe!");

@@ -2,16 +2,11 @@
 using MedServer.Domain.Dtos.PatientDtos;
 using MedServer.Domain.Services;
 using MedServer.Infra.Transactions;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MedServer.Api.Controllers
 {
-
     public class PatientController : BaseController
     {
         private readonly IPatientService _service;

@@ -8,7 +8,7 @@ namespace MedServer.Domain.Repositories
     public interface IScheduleRepository
     {
         IEnumerable<Schedule> Get(int skip, int take);
-        IEnumerable<Schedule> Find(Expression<Func<Schedule, bool>> expression, int skip, int take);
+        IEnumerable<Schedule> GetFull(int skip, int take, string patientName);
         Schedule Get(int id);
         void Save(Schedule schedule);
         void Update(Schedule schedule);

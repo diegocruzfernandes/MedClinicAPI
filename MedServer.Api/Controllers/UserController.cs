@@ -4,13 +4,10 @@ using MedServer.Domain.Services;
 using MedServer.Infra.Transactions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MedServer.Api.Controllers
-{    
+{
     [Authorize(Policy = "Doctors")]
     public class UserController : BaseController
     {

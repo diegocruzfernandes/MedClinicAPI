@@ -21,7 +21,6 @@ namespace MedServer.Domain.Entities
             Enabled = enabled;
 
             Validate();
-
             Password = ValidationPassword.Encrypt(Password);
         }
         #endregion

@@ -3,7 +3,7 @@ namespace MedServer.Domain.Dtos.DoctorDtos
 {
     public class CreateDoctorDto
     {
-        public CreateDoctorDto(string name, string specialty, string codeRegister, bool enabled, int userid, string email, string nickname, int permission)
+        public CreateDoctorDto(string name, string specialty, string codeRegister, bool enabled, int userid, string email, string nickname)
         {
             Name = name;
             Specialty = specialty;
@@ -11,8 +11,8 @@ namespace MedServer.Domain.Dtos.DoctorDtos
             Enabled = enabled;
             Userid = userid;
             Email = email;
-            Nickname = nickname;
-            Permission = permission;
+            Password = Password;
+            Nickname = nickname;            
         }
 
         public string Name { get; set; }
@@ -22,6 +22,6 @@ namespace MedServer.Domain.Dtos.DoctorDtos
         public int Userid { get; set; }
         public string Email { get; set; }
         public string Nickname { get; set; }
-        public int Permission { get; set; }
+        public string Password { get; set; }        
     }
 }

@@ -21,7 +21,7 @@ namespace MedServer.Service
         {
             var patientTmp = new Patient(0, patient.Name, (EGender)patient.Gender, patient.Email, patient.PhoneNumber, patient.Details, patient.BirthDate, patient.Enabled);
             if (_repository.PatientExists(patientTmp))
-                patientTmp.AddNotification("Patient", "O usuário já existe");
+                patientTmp.AddNotification("Patient", "Paciente já existe");
             if (patientTmp.Valid)
                 _repository.Save(patientTmp);
             return patientTmp;

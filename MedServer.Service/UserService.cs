@@ -4,9 +4,7 @@ using MedServer.Domain.Entities;
 using MedServer.Domain.Repositories;
 using MedServer.Domain.Services;
 using MedServer.Domain.ValueObjects;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace MedServer.Service
 {
@@ -44,10 +42,11 @@ namespace MedServer.Service
         public User Create(CreateUserDto user)
         {
             var userNew = new User(0, user.Email, user.Password, user.Nickname, (EPermission)user.Permission, user.Enabled);
+
             if (_repository.UserExists(userNew))
             {
-                AddNotification("User", "Usuário já cadastrado!");
-                return null;
+                userNew.AddNotification("User", "Usuário já cadastrado!");
+                return userNew;
             }
             if (userNew.Valid)
                 _repository.Save(userNew);

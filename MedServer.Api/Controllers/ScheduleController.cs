@@ -2,16 +2,12 @@
 using MedServer.Domain.Dtos.SheduleDtos;
 using MedServer.Domain.Services;
 using MedServer.Infra.Transactions;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MedServer.Api.Controllers
 {
-
     public class ScheduleController : BaseController
     {
         private readonly IScheduleService _service;
@@ -37,22 +33,19 @@ namespace MedServer.Api.Controllers
         [Route("v1/schedule")]
         public async Task<IActionResult> GetByRange(
           [FromQuery(Name = "page_size")]int page_size,
-          [FromQuery(Name = "page")]int page)
+          [FromQuery(Name = "page")]int page,
+          [FromQuery(Name = "name")]string name
+          )
         {
-            var skip = (page - 1) * page_size;
-            var result = _service.Get(skip, page_size);
-            return await ResponseList(result);
-        }
+            Object result;
+            if(page <= 0 && page_size <= 0)
+            {
+                page = 1;
+                page_size = 10;
+            }
 
-        [HttpGet]
-        [Route("v1/schedule/doctor")]
-        public async Task<IActionResult> GetBydoctor(
-         [FromQuery(Name = "page_size")]int page_size,
-         [FromQuery(Name = "page")]int page,
-         [FromQuery(Name = "doctorid")]int doctorid)
-        {
             var skip = (page - 1) * page_size;
-            var result = _service.GetByDoctor(doctorid, skip, page_size);
+                result = _service.GetAll(skip, page_size, name);
             return await ResponseList(result);
         }
 

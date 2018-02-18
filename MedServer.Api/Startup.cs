@@ -1,4 +1,5 @@
 ﻿using MedServer.Api.Security;
+using MedServer.Api.Shared;
 using MedServer.Domain.Repositories;
 using MedServer.Domain.Services;
 using MedServer.Domain.Shared;
@@ -13,7 +14,6 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Serialization;
-using Swashbuckle.AspNetCore.Swagger;
 
 namespace MedServer.Api
 {
@@ -60,20 +60,17 @@ namespace MedServer.Api
             services.AddTransient<IScheduleRepository, ScheduleRepository>();
             services.AddTransient<IScheduleService, ScheduleService>();
 
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new Info
-                {
-                    Version = "v1",
-                    Title = "MedClinic API",
-                    Description = "Servidor API para o MedClinic",
-                    TermsOfService = "None",
-                    Contact = new Contact { Name = "MedClinic-Github", Email = "diegocruzfernandes@hotmail.com", Url = "https://github.com/diegocruzfernandes/MazzatechMedServer" },
-                    License = new License { Name = "MedClinic - Application", Url = "https://example.com/license" }
-                });
-            });
+            services.AddSwaggerDocumentation();
 
-            services.AddCors();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                      .AllowAnyMethod()
+                      .AllowAnyHeader()
+                      .AllowCredentials()
+                .Build());
+            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -82,29 +79,21 @@ namespace MedServer.Api
 
             app.UseSwagger();
 
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "MedClinic V1");
-            });
+            app.UseSwaggerDocumentation();
 
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 builder.AddUserSecrets<Startup>();
             }
-           
-            app.UseCors(x =>
-            {
-                x.AllowAnyHeader();
-                x.AllowAnyMethod();
-                x.AllowAnyOrigin();
-            });
+
+            app.UseCors("CorsPolicy");
 
             app.UseAuthentication();
 
             app.UseMvc();
 
-            ConfigsAppSettings.SQLConnectionString = Configuration.GetConnectionString("myConnectionString");
+            ConfigsAppSettings.SQLConnectionString = Configuration.GetConnectionString("myConnectionString");   
         }        
     }
 }

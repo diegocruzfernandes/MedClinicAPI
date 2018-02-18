@@ -36,40 +36,39 @@ namespace MedServer.Api.Controllers
                     return BadRequest(new
                     {
                         success = false,
-                        errors = new[] { "Ocorreu uma falha  interna no servidor.", ex.Source + " - " + ex.Message }
+                        data = new[] { "Ocorreu uma falha  interna no servidor.", ex.Source + " - " + ex.Message }
                     });
                 }
             }
             else
             {
-                return BadRequest(new
+                return Ok(new
                 {
                     success = false,
-                    errors = notifications
+                    data = notifications
                 });
             }
         }
 
         public async Task<IActionResult> ResponseList(object result)
         {
-            try
+             try
             {
                 return Ok(result);
             }
             catch
             {
-                return BadRequest(new
+                return Ok(new
                 {
                     success = false,
-                    errors = new[] { "Ocorreu uma folha interna no servidor." }
+                    data = new[] { "Ocorreu uma folha interna no servidor." }
                 });
             }
-
         }
 
         public async Task<IActionResult> ResponseNullOrEmpty(List<string> listError)
         {
-            return BadRequest(new
+            return Ok(new
             {
                 success = false,
                 errors = new[] { "Dados não preenchidos ou inválidos." },
@@ -79,7 +78,7 @@ namespace MedServer.Api.Controllers
 
         public async Task<IActionResult> ResponseNullOrEmpty()
         {
-            return BadRequest(new
+            return Ok(new
             {
                 success = false,
                 errors = new[] { "Dados não preenchidos ou inválidos." }

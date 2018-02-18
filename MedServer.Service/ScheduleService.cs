@@ -6,7 +6,6 @@ using MedServer.Domain.Services;
 using MedServer.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 
 namespace MedServer.Service
 {
@@ -70,16 +69,17 @@ namespace MedServer.Service
             return schedule;
         }
 
-        public IEnumerable<Schedule> Find(Expression<Func<Schedule, bool>> expression, int skip, int take)
+        public IEnumerable<ViewScheduleDto> GetAll(int skip, int take, string patientName)
         {
-            return _repository.Find(expression, skip, take);
-        }
-
-        public IEnumerable<ViewScheduleDto> Get(int skip, int take)
-        {
+            IEnumerable<Schedule> schedules;
             List<ViewScheduleDto> list = new List<ViewScheduleDto>();
-            var schedule = _repository.Get(skip, take);
-            foreach (var item in schedule)
+
+            if (string.IsNullOrEmpty(patientName))
+                schedules = _repository.GetFull(skip, take, patientName);
+            else
+                schedules = _repository.Get(skip, take);
+
+            foreach (var item in schedules)
             {
                 list.Add(new ViewScheduleDto(item.Id, item.Patient.Id, item.Patient.Name, item.Doctor.Id, item.Doctor.User.Nickname, item.TypeConsult.Id, item.TypeConsult.Name, (int)item.Status, Enum.GetName(typeof(EStatus), item.Status), item.Initial, item.Finish));
             }
@@ -89,11 +89,6 @@ namespace MedServer.Service
         public Schedule Get(int id)
         {
             return _repository.Get(id);
-        }
-
-        public IEnumerable<Schedule> GetByDoctor(int doctorid, int skip, int take)
-        {
-            return _repository.Find(d => d.Doctor.Id == doctorid, skip, take);
         }
 
         public Schedule Update(EditScheduleDto schedule)
